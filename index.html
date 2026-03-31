@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeacherBase | 教員のための総合情報メディア</title>
+<meta name="description" content="法改正・教育ニュース・おすすめ書籍を高校教員の視点でキュレーション。忙しい先生のための情報メディアです。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#e8f4fd;--sky-mid:#d0e8f8;--sky-deep:#b8d8f0;--blue:#3a85c8;--blue-dark:#2260a0;--blue-pale:#f0f7fd;--teal:#3aabbf;--teal-pale:#e0f4f8;--mint:#e8f8f4;--sage:#4aaa88;--amber:#f0a830;--amber-pale:#fef8e8;--coral:#f07060;--coral-pale:#fef0ee;--white:#fff;--ink:#1e2d3d;--ink-mid:#3a5068;--ink-soft:#7090a8;--ink-faint:#aac0d0;--bg:#f4f8fc;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+header{background:var(--white);border-bottom:1px solid var(--sky-mid);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(58,133,200,0.08);}
+.header-top{background:var(--blue);padding:5px 2rem;display:flex;justify-content:space-between;}
+.header-top-text{font-size:11px;color:rgba(255,255,255,0.75);letter-spacing:0.06em;}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 2rem;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:38px;height:38px;background:linear-gradient(135deg,var(--blue),var(--teal));border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.logo-mark svg{width:22px;height:22px;}
+.logo-main{font-family:'Playfair Display',serif;font-size:22px;color:var(--ink);display:block;line-height:1.1;}
+.logo-main span{color:var(--blue);}
+.logo-sub{font-size:10px;color:var(--ink-soft);letter-spacing:0.1em;display:block;}
+nav{display:flex;gap:4px;}
+nav a{color:var(--ink-mid);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:6px;transition:background .15s,color .15s;}
+nav a:hover,nav a.active{background:var(--sky);color:var(--blue);}
+nav a.active{font-weight:500;}
+.hero{background:linear-gradient(160deg,var(--blue-pale) 0%,var(--sky) 55%,var(--teal-pale) 100%);padding:3rem 2rem;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(58,171,191,0.1);pointer-events:none;}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:center;position:relative;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.14em;color:var(--teal);font-weight:500;margin-bottom:1rem;background:var(--teal-pale);padding:4px 12px;border-radius:20px;}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);flex-shrink:0;}
+.hero-title{font-family:'Noto Serif JP',serif;font-size:28px;font-weight:400;line-height:1.75;color:var(--ink);margin-bottom:1rem;letter-spacing:0.04em;}
+.hero-title strong{font-weight:600;color:var(--blue-dark);display:block;font-size:32px;line-height:1.5;}
+.hero-title .ul{position:relative;display:inline-block;}
+.hero-title .ul::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:6px;background:linear-gradient(90deg,rgba(58,133,200,0.25),rgba(58,171,191,0.25));border-radius:3px;z-index:-1;}
+.hero-desc{font-size:14px;color:var(--ink-mid);line-height:2;margin-bottom:1.8rem;}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;padding:12px 24px;border-radius:8px;font-size:13px;font-weight:500;letter-spacing:0.04em;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 4px 12px rgba(58,133,200,0.28);}
+.hero-cta:hover{background:var(--blue-dark);transform:translateY(-1px);}
+.hero-pickup{background:var(--white);border-radius:16px;padding:1.4rem;box-shadow:0 4px 24px rgba(58,133,200,0.1);position:relative;}
+.pickup-badge{position:absolute;top:-10px;left:16px;background:var(--amber);color:white;font-size:10px;font-weight:700;letter-spacing:0.12em;padding:3px 12px;border-radius:20px;}
+.pickup-category{font-size:10px;letter-spacing:0.12em;color:var(--teal);font-weight:500;margin-bottom:8px;text-transform:uppercase;}
+.pickup-title{font-family:'Noto Serif JP',serif;font-size:16px;font-weight:600;line-height:1.6;color:var(--ink);margin-bottom:10px;}
+.pickup-meta{font-size:11px;color:var(--ink-soft);display:flex;align-items:center;gap:8px;}
+.pickup-meta span{background:var(--sky);padding:2px 8px;border-radius:20px;color:var(--blue);font-size:10px;}
+.main-wrap{max-width:1100px;margin:2.5rem auto;padding:0 2rem;display:grid;grid-template-columns:1fr 300px;gap:2.5rem;}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:1.4rem;}
+.section-bar{width:4px;height:22px;background:linear-gradient(180deg,var(--blue),var(--teal));border-radius:2px;flex-shrink:0;}
+.section-title{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:600;}
+.section-en{font-size:11px;color:var(--ink-faint);letter-spacing:0.1em;}
+.section-more{margin-left:auto;font-size:12px;color:var(--blue);background:var(--sky);padding:4px 12px;border-radius:20px;text-decoration:none;transition:background .15s;}
+.section-more:hover{background:var(--sky-mid);}
+.news-list{display:flex;flex-direction:column;gap:0;margin-bottom:2.5rem;}
+.news-item{display:flex;gap:1rem;padding:1rem 0.8rem;border-bottom:1px solid var(--sky-mid);border-radius:10px;cursor:pointer;transition:background .15s;text-decoration:none;color:inherit;}
+.news-item:hover{background:var(--white);}
+.news-thumb{width:80px;height:58px;border-radius:8px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;}
+.src-mext{background:#003288;}.src-nikkei{background:#d60000;}.src-yahoo{background:#720099;}.src-tb{background:linear-gradient(135deg,var(--blue),var(--teal));}.src-edtk{background:#e87020;}
+.media-abbr{font-size:13px;font-weight:700;color:white;letter-spacing:0.04em;line-height:1;}
+.media-name{font-size:9px;color:rgba(255,255,255,0.78);letter-spacing:0.06em;line-height:1;}
+.news-tags{display:flex;gap:5px;margin-bottom:5px;flex-wrap:wrap;}
+.tag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;}
+.tag-law{background:var(--mint);color:var(--sage);}
+.tag-tool{background:var(--sky);color:var(--blue);}
+.tag-book{background:var(--amber-pale);color:#c08020;}
+.tag-event{background:var(--teal-pale);color:var(--teal);}
+.tag-new{background:var(--coral);color:white;}
+.news-title{font-size:14px;font-weight:500;line-height:1.6;color:var(--ink);margin-bottom:4px;}
+.news-meta{font-size:11px;color:var(--ink-soft);}
+.books-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.book-card{background:var(--white);border-radius:12px;padding:1rem;cursor:pointer;border:1px solid var(--sky-mid);transition:transform .15s,box-shadow .15s;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;}
+.book-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,133,200,0.11);}
+.book-cover{width:100%;height:76px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:28px;}
+.book-tag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;display:inline-block;}
+.book-title{font-size:12px;font-weight:500;line-height:1.55;color:var(--ink);}
+.book-stars{display:flex;align-items:center;gap:4px;}
+.stars{color:var(--amber);font-size:12px;letter-spacing:-1px;}
+.stars-score{font-size:12px;font-weight:500;color:var(--ink-mid);}
+.book-summary{font-size:11px;color:var(--ink-mid);line-height:1.65;background:var(--bg);border-radius:5px;padding:6px 8px;border-left:2px solid var(--blue);}
+.book-buy{display:flex;gap:5px;margin-top:auto;}
+.btn-buy{flex:1;padding:6px 0;border-radius:5px;font-size:10px;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s;}
+.btn-amzn{background:#FF9900;color:#111;}
+.btn-raku{background:#BF0000;color:white;}
+.btn-buy:hover{opacity:0.82;}
+.sidebar{display:flex;flex-direction:column;gap:1.5rem;}
+.sidebar-card{background:var(--white);border-radius:14px;padding:1.2rem;border:1px solid var(--sky-mid);}
+.sidebar-header{display:flex;align-items:center;gap:8px;margin-bottom:1rem;padding-bottom:8px;border-bottom:1.5px solid var(--sky-mid);}
+.sidebar-title{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:600;}
+.law-spotlight{background:linear-gradient(135deg,var(--blue),var(--teal));border-radius:14px;padding:1.4rem;color:white;}
+.law-label{font-size:10px;letter-spacing:0.14em;opacity:.85;margin-bottom:6px;}
+.law-title{font-family:'Noto Serif JP',serif;font-size:16px;font-weight:600;line-height:1.5;margin-bottom:8px;}
+.law-desc{font-size:12px;opacity:.88;line-height:1.75;margin-bottom:14px;}
+.law-btn{display:inline-block;background:rgba(255,255,255,0.2);color:white;font-size:11px;font-weight:500;padding:7px 16px;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,0.4);text-decoration:none;}
+.cat-item{display:flex;align-items:center;justify-content:space-between;padding:9px 6px;border-bottom:1px solid var(--sky);font-size:13px;cursor:pointer;color:var(--ink-mid);text-decoration:none;border-radius:6px;transition:background .12s,color .12s;}
+.cat-item:hover{background:var(--sky);color:var(--blue);}
+.cat-count{font-size:11px;color:var(--ink-faint);background:var(--bg);padding:2px 8px;border-radius:20px;}
+.pop-item{display:flex;gap:10px;padding:10px 6px;border-bottom:1px solid var(--sky);cursor:pointer;align-items:flex-start;border-radius:6px;transition:background .12s;text-decoration:none;color:inherit;}
+.pop-item:hover{background:var(--sky);}
+.pop-num{font-family:'Playfair Display',serif;font-size:20px;color:var(--sky-deep);line-height:1;flex-shrink:0;width:22px;text-align:center;}
+.pop-item:nth-child(1) .pop-num{color:var(--blue);}
+.pop-item:nth-child(2) .pop-num{color:var(--teal);}
+.pop-title{font-size:12px;line-height:1.6;color:var(--ink-mid);}
+footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2.5rem 2rem;margin-top:2rem;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:20px;color:white;}
+.footer-logo span{color:var(--teal);}
+.footer-links{display:flex;gap:20px;font-size:12px;}
+.footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;}
+.footer-links a:hover{color:white;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-text{animation:fadeUp .5s .1s ease both;}
+.hero-pickup{animation:fadeUp .5s .2s ease both;}
+.main-wrap{animation:fadeUp .5s .15s ease both;}
+@media(max-width:768px){.hero-inner,.main-wrap{grid-template-columns:1fr}.hero-pickup{display:none}.books-grid{grid-template-columns:1fr}.header-top{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <span class="header-top-text">教員のための、教員による情報メディア</span>
+    <span class="header-top-text">高校教員向け → 全校種へ拡大予定</span>
+  </div>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <div><span class="logo-main">Teacher<span>Base</span></span><span class="logo-sub">教員のための総合情報メディア</span></div>
+    </a>
+    <nav>
+      <a href="news.html">ニュース</a>
+      <a href="news.html?cat=法改正">法改正</a>
+      <a href="books.html">書籍紹介</a>
+      <a href="#" class="active">TOP</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="hero-eyebrow">For Teachers, By Teachers</span>
+      <h1 class="hero-title">忙しい先生が<strong>ほしい情報に、<span class="ul">すぐたどり着ける</span>場所。</strong>それが TeacherBase です。</h1>
+      <p class="hero-desc">法改正・教育ニュース・授業に役立つ書籍を<br>高校教員の目線でキュレーション。<br>忙しい合間でも、さっと読めてすぐ使えます。</p>
+      <a class="hero-cta" href="news.html">最新ニュースを読む <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div class="hero-pickup">
+      <div class="pickup-badge">✦ PICKUP</div>
+      <div class="pickup-category">特集記事</div>
+      <div class="pickup-title">教員必携アプリ2026年版｜授業準備・校務DXを効率化する10選</div>
+      <div class="pickup-meta"><span>ツール特集</span>2026.03.28 · 読了 約8分</div>
+    </div>
+  </div>
+</div>
+
+<div class="main-wrap">
+  <main>
+    <section style="margin-bottom:2.5rem;">
+      <div class="section-header">
+        <div class="section-bar"></div>
+        <span class="section-title">最新ニュース</span>
+        <span class="section-en">News</span>
+        <a class="section-more" href="news.html">一覧を見る ›</a>
+      </div>
+      <div class="news-list">
+        <a class="news-item" href="news.html">
+          <div class="news-thumb src-mext"><span class="media-abbr">文科省</span><span class="media-name">mext.go.jp</span></div>
+          <div><div class="news-tags"><span class="tag tag-new">NEW</span><span class="tag tag-law">法改正</span></div><div class="news-title">給特法改正で何が変わる？ 2026年度から適用される残業上限規制をわかりやすく解説</div><div class="news-meta">2026.03.29 · 文部科学省</div></div>
+        </a>
+        <a class="news-item" href="news.html">
+          <div class="news-thumb src-edtk"><span class="media-abbr">EdTech</span><span class="media-name">edtechzine.jp</span></div>
+          <div><div class="news-tags"><span class="tag tag-tool">ICT・AI</span></div><div class="news-title">生徒の発言を自動文字起こし＆要約——授業記録AIツール「TeachLog」使ってみた</div><div class="news-meta">2026.03.27 · EdTechZine</div></div>
+        </a>
+        <a class="news-item" href="news.html">
+          <div class="news-thumb src-tb"><span class="media-abbr">TB</span><span class="media-name">TeacherBase</span></div>
+          <div><div class="news-tags"><span class="tag tag-book">書籍紹介</span></div><div class="news-title">『問いのデザイン』——探究学習・SSH担当教員に読んでほしい一冊【レビュー】</div><div class="news-meta">2026.03.22 · TeacherBase 編集部</div></div>
+        </a>
+        <a class="news-item" href="news.html">
+          <div class="news-thumb src-yahoo"><span class="media-abbr">Yahoo!</span><span class="media-name">news.yahoo.co.jp</span></div>
+          <div><div class="news-tags"><span class="tag tag-event">研修・イベント</span></div><div class="news-title">【参加無料・オンライン】高校教員向けAI活用研修2026春季——定員200名・4月開催</div><div class="news-meta">2026.03.20 · Yahoo!ニュース</div></div>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-header">
+        <div class="section-bar"></div>
+        <span class="section-title">おすすめ書籍</span>
+        <span class="section-en">Books</span>
+        <a class="section-more" href="books.html">もっと見る ›</a>
+      </div>
+      <div class="books-grid">
+        <a class="book-card" href="books.html">
+          <div class="book-cover" style="background:var(--teal-pale)">📖</div>
+          <span class="book-tag" style="background:var(--teal-pale);color:var(--teal);">探究・PBL</span>
+          <div class="book-title">問いのデザイン——創造的対話のファシリテーション</div>
+          <div class="book-stars"><span class="stars">★★★★★</span><span class="stars-score">4.8</span></div>
+          <div class="book-summary">探究担当・SSH教員に特におすすめ。「問いを立てる」ことの奥深さと実践法が学べる。</div>
+          <div class="book-buy"><button class="btn-buy btn-amzn">Amazon</button><button class="btn-buy btn-raku">楽天</button></div>
+        </a>
+        <a class="book-card" href="books.html">
+          <div class="book-cover" style="background:var(--sky)">📘</div>
+          <span class="book-tag" style="background:var(--sky);color:var(--blue);">授業設計</span>
+          <div class="book-title">深い学びを促す授業デザイン——逆向き設計で考える</div>
+          <div class="book-stars"><span class="stars">★★★★☆</span><span class="stars-score">4.5</span></div>
+          <div class="book-summary">「まず評価を決めてから授業を設計する」逆向き設計の入門書。単元計画を見直したい先生に。</div>
+          <div class="book-buy"><button class="btn-buy btn-amzn">Amazon</button><button class="btn-buy btn-raku">楽天</button></div>
+        </a>
+        <a class="book-card" href="books.html">
+          <div class="book-cover" style="background:var(--amber-pale)">📙</div>
+          <span class="book-tag" style="background:var(--amber-pale);color:#c08020;">理科・物理</span>
+          <div class="book-title">科学的思考力を育てる授業づくり</div>
+          <div class="book-stars"><span class="stars">★★★★☆</span><span class="stars-score">4.4</span></div>
+          <div class="book-summary">物理の「なぜ？」を引き出す授業づくりの実践集。実験の組み立て方・発問設計まで具体例が豊富。</div>
+          <div class="book-buy"><button class="btn-buy btn-amzn">Amazon</button><button class="btn-buy btn-raku">楽天</button></div>
+        </a>
+        <a class="book-card" href="books.html">
+          <div class="book-cover" style="background:var(--mint)">📗</div>
+          <span class="book-tag" style="background:var(--mint);color:var(--sage);">学校法律</span>
+          <div class="book-title">教師のための法律入門 第4版</div>
+          <div class="book-stars"><span class="stars">★★★★★</span><span class="stars-score">4.7</span></div>
+          <div class="book-summary">保護者対応・体罰・個人情報など学校現場の法律問題を解説。職員室に一冊置いておきたい。</div>
+          <div class="book-buy"><button class="btn-buy btn-amzn">Amazon</button><button class="btn-buy btn-raku">楽天</button></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <aside class="sidebar">
+    <div class="law-spotlight">
+      <div class="law-label">✦ 特集</div>
+      <div class="law-title">2026年 教育関連<br>法改正まとめ</div>
+      <div class="law-desc">給特法・学習指導要領・個人情報保護法……今年施行の法改正を一覧で確認できます。</div>
+      <a class="law-btn" href="news.html?cat=法改正">詳細を見る →</a>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-header"><span class="sidebar-title">カテゴリ</span></div>
+      <div>
+        <a class="cat-item" href="news.html?cat=法改正">⚖️ 法改正・制度 <span class="cat-count">24</span></a>
+        <a class="cat-item" href="news.html?cat=ICT・AI">🛠️ ICT・DX・AI <span class="cat-count">18</span></a>
+        <a class="cat-item" href="books.html">📚 書籍レビュー <span class="cat-count">12</span></a>
+        <a class="cat-item" href="news.html?cat=研修・イベント">📅 研修・イベント <span class="cat-count">11</span></a>
+        <a class="cat-item" href="news.html?cat=授業アイデア">💡 授業アイデア <span class="cat-count">15</span></a>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="sidebar-header"><span class="sidebar-title">よく読まれている</span></div>
+      <div>
+        <a class="pop-item" href="news.html"><span class="pop-num">1</span><span class="pop-title">給特法の「勤務時間外」ってどこから？現場教員が知るべき基準を解説</span></a>
+        <a class="pop-item" href="news.html"><span class="pop-num">2</span><span class="pop-title">ChatGPT・Claude活用術——授業準備を半分の時間にする方法</span></a>
+        <a class="pop-item" href="news.html"><span class="pop-num">3</span><span class="pop-title">高校教員おすすめタスク管理ツール5選【2026年版】</span></a>
+        <a class="pop-item" href="news.html"><span class="pop-num">4</span><span class="pop-title">SSH担当になったら最初にやること——引き継ぎチェックリスト</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Teacher<span>Base</span></div>
+    <div class="footer-links">
+      <a href="#">このサイトについて</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
