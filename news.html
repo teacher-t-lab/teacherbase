@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教育ニュース | TeacherBase</title>
+<meta name="description" content="文科省・教育新聞・各種メディアから、教員に関係するニュースを自動収集しています。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#e8f4fd;--sky-mid:#d0e8f8;--sky-deep:#b8d8f0;--blue:#3a85c8;--blue-dark:#2260a0;--blue-pale:#f0f7fd;--teal:#3aabbf;--teal-pale:#e0f4f8;--mint:#e8f8f4;--sage:#4aaa88;--amber:#f0a830;--amber-pale:#fef8e8;--coral:#f07060;--violet:#7c6fcd;--violet-pale:#f0eeff;--white:#fff;--ink:#1e2d3d;--ink-mid:#3a5068;--ink-soft:#7090a8;--ink-faint:#aac0d0;--bg:#f4f8fc;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+header{background:var(--white);border-bottom:1px solid var(--sky-mid);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(58,133,200,0.08);}
+.header-top{background:var(--blue);padding:5px 2rem;display:flex;justify-content:space-between;}
+.header-top-text{font-size:11px;color:rgba(255,255,255,0.75);letter-spacing:0.06em;}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 2rem;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--teal));border-radius:9px;display:flex;align-items:center;justify-content:center;}
+.logo-mark svg{width:20px;height:20px;}
+.logo-main{font-family:'Playfair Display',serif;font-size:21px;color:var(--ink);display:block;line-height:1.1;}
+.logo-main span{color:var(--blue);}
+.logo-sub{font-size:10px;color:var(--ink-soft);letter-spacing:0.1em;display:block;}
+nav{display:flex;gap:4px;}
+nav a{color:var(--ink-mid);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:6px;transition:background .15s,color .15s;}
+nav a:hover,nav a.active{background:var(--sky);color:var(--blue);}
+nav a.active{font-weight:500;}
+.page-hero{background:linear-gradient(160deg,var(--blue-pale),var(--sky) 60%,var(--teal-pale));padding:2.2rem 2rem 1.8rem;}
+.page-hero-inner{max-width:1100px;margin:0 auto;}
+.breadcrumb{font-size:12px;color:var(--ink-soft);margin-bottom:10px;}
+.breadcrumb a{color:var(--blue);text-decoration:none;}
+.breadcrumb span{margin:0 6px;}
+.page-title{font-family:'Noto Serif JP',serif;font-size:28px;font-weight:600;margin-bottom:6px;}
+.page-desc{font-size:13px;color:var(--ink-mid);line-height:1.85;}
+.news-count{display:inline-flex;align-items:center;gap:6px;margin-top:14px;background:var(--white);border:1px solid var(--sky-mid);border-radius:20px;padding:4px 14px;font-size:13px;color:var(--ink-mid);}
+.news-count strong{color:var(--blue);font-size:16px;font-weight:600;}
+.main-wrap{max-width:1100px;margin:2rem auto;padding:0 2rem;display:grid;grid-template-columns:230px 1fr;gap:2rem;}
+.filter-sidebar{display:flex;flex-direction:column;gap:1.2rem;}
+.filter-block{background:var(--white);border-radius:12px;border:1px solid var(--sky-mid);padding:1rem;}
+.filter-block-title{font-size:11px;font-weight:500;letter-spacing:0.1em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--sky-mid);}
+.filter-list{display:flex;flex-direction:column;gap:2px;}
+.filter-item{display:flex;align-items:center;padding:7px 8px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--ink-mid);transition:background .12s,color .12s;user-select:none;}
+.filter-item:hover{background:var(--sky);color:var(--blue);}
+.filter-item.active{background:var(--blue);color:white;}
+.search-wrap{position:relative;}
+.search-input{width:100%;padding:8px 12px 8px 34px;border-radius:8px;border:1.5px solid var(--sky-mid);background:var(--white);font-size:13px;font-family:inherit;color:var(--ink);outline:none;transition:border-color .15s;}
+.search-input:focus{border-color:var(--blue);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:0.4;}
+.popular-list{display:flex;flex-direction:column;}
+.pop-item{display:flex;gap:10px;padding:9px 4px;border-bottom:1px solid var(--sky);cursor:pointer;border-radius:6px;transition:background .12s;text-decoration:none;color:inherit;}
+.pop-item:hover{background:var(--sky);}
+.pop-num{font-family:'Playfair Display',serif;font-size:20px;color:var(--sky-deep);line-height:1;flex-shrink:0;width:22px;text-align:center;}
+.pop-item:nth-child(1) .pop-num{color:var(--blue);}
+.pop-item:nth-child(2) .pop-num{color:var(--teal);}
+.pop-item:nth-child(3) .pop-num{color:var(--amber);}
+.pop-title{font-size:12px;line-height:1.6;color:var(--ink-mid);}
+.sort-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:8px;}
+.active-filters{display:flex;flex-wrap:wrap;gap:5px;flex:1;}
+.active-filter-chip{display:inline-flex;align-items:center;gap:5px;background:var(--blue);color:white;font-size:11px;padding:3px 10px;border-radius:20px;}
+.active-filter-chip button{background:none;border:none;color:white;cursor:pointer;font-size:13px;line-height:1;padding:0;opacity:0.8;}
+.sort-select{font-size:12px;font-family:inherit;color:var(--ink-mid);border:1px solid var(--sky-mid);background:var(--white);padding:5px 10px;border-radius:6px;cursor:pointer;outline:none;}
+.news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.news-card{background:var(--white);border-radius:14px;border:1px solid var(--sky-mid);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;cursor:pointer;}
+.news-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(58,133,200,0.13);}
+.card-thumb{height:76px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;flex-shrink:0;}
+.media-abbr{font-size:15px;font-weight:700;color:white;letter-spacing:0.04em;line-height:1;}
+.media-domain{font-size:9px;color:rgba(255,255,255,0.72);letter-spacing:0.06em;}
+.thumb-法改正{background:linear-gradient(135deg,#2a7a48,#3aaa68);}
+.thumb-授業アイデア{background:linear-gradient(135deg,#c07010,#f0a830);}
+.thumb-ICT・AI{background:linear-gradient(135deg,#2260a0,#3a85c8);}
+.thumb-研修・イベント{background:linear-gradient(135deg,#2a8898,#3aabbf);}
+.thumb-書籍・論文{background:linear-gradient(135deg,#5a50a8,#7c6fcd);}
+.card-body{padding:1rem;display:flex;flex-direction:column;gap:7px;flex:1;}
+.card-tags{display:flex;gap:5px;flex-wrap:wrap;}
+.ctag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;}
+.ctag-法改正{background:#e8f4ee;color:#2a7a48;}
+.ctag-授業アイデア{background:#fef8e8;color:#b06010;}
+.ctag-ICT・AI{background:#e8f4fd;color:#2260a0;}
+.ctag-研修・イベント{background:#e0f4f8;color:#2a7878;}
+.ctag-書籍・論文{background:#f0eeff;color:#5a50a8;}
+.ctag-new{background:#f07060;color:white;}
+.card-title{font-size:14px;font-weight:500;line-height:1.6;color:var(--ink);}
+.card-summary{font-size:12px;color:var(--ink-mid);line-height:1.7;flex:1;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--sky);margin-top:auto;}
+.card-meta{font-size:11px;color:var(--ink-soft);}
+.card-source{font-size:10px;color:var(--ink-soft);background:var(--bg);padding:2px 8px;border-radius:4px;}
+.news-card.featured{grid-column:1/-1;flex-direction:row;}
+.news-card.featured .card-thumb{width:200px;height:auto;border-radius:0;flex-shrink:0;}
+.news-card.featured .card-title{font-size:16px;}
+.empty-state{grid-column:1/-1;text-align:center;padding:4rem;color:var(--ink-soft);}
+.empty-state p{font-size:15px;margin-top:8px;}
+footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top:3rem;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:19px;color:white;}
+.footer-logo span{color:var(--teal);}
+.footer-links{display:flex;gap:18px;font-size:12px;}
+.footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.news-grid{animation:fadeUp .4s ease both;}
+@media(max-width:900px){.main-wrap{grid-template-columns:1fr;}.filter-sidebar{display:none;}.news-grid{grid-template-columns:1fr;}.news-card.featured{flex-direction:column;}.news-card.featured .card-thumb{width:100%;height:76px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <span class="header-top-text">教員のための、教員による情報メディア</span>
+    <span class="header-top-text">高校教員向け → 全校種へ拡大予定</span>
+  </div>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <div><span class="logo-main">Teacher<span>Base</span></span><span class="logo-sub">教員のための総合情報メディア</span></div>
+    </a>
+    <nav>
+      <a href="news.html" class="active">ニュース</a>
+      <a href="news.html?cat=法改正">法改正</a>
+      <a href="books.html">書籍紹介</a>
+      <a href="index.html">TOP</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">TOP</a><span>›</span>ニュース</div>
+    <h1 class="page-title">教育ニュース</h1>
+    <p class="page-desc">文科省・教育新聞・各種メディアから、教員に関係する情報を自動収集しています。</p>
+    <div class="news-count">現在 <strong id="count-display">8</strong> 件表示中</div>
+  </div>
+</div>
+
+<div class="main-wrap">
+  <aside class="filter-sidebar">
+    <div class="filter-block">
+      <div class="filter-block-title">キーワード検索</div>
+      <div class="search-wrap">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="text" id="search-input" placeholder="キーワードで検索…">
+      </div>
+    </div>
+    <div class="filter-block">
+      <div class="filter-block-title">カテゴリ</div>
+      <div class="filter-list" id="cat-filters">
+        <div class="filter-item active" data-cat="all">すべて</div>
+        <div class="filter-item" data-cat="法改正">⚖️ 法改正・文教省通知</div>
+        <div class="filter-item" data-cat="授業アイデア">💡 授業・指導法アイデア</div>
+        <div class="filter-item" data-cat="ICT・AI">🛠️ 教育技術・ICT・AI</div>
+        <div class="filter-item" data-cat="研修・イベント">📅 研修・イベント情報</div>
+        <div class="filter-item" data-cat="書籍・論文">📚 書籍・論文紹介</div>
+      </div>
+    </div>
+    <div class="filter-block">
+      <div class="filter-block-title">よく読まれている</div>
+      <div class="popular-list" id="popular-list"></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="sort-row">
+      <div class="active-filters" id="active-filters"></div>
+      <select class="sort-select" id="sort-select">
+        <option value="new">新しい順</option>
+        <option value="popular">よく読まれている順</option>
+      </select>
+    </div>
+    <div class="news-grid" id="news-grid"></div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Teacher<span>Base</span></div>
+    <div class="footer-links">
+      <a href="#">このサイトについて</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const NEWS=[
+  {id:1,cat:"法改正",isNew:true,title:"給特法改正で何が変わる？ 2026年度から適用される残業上限規制を現場目線で解説",summary:"4月から施行される給特法改正の要点を整理。月45時間・年360時間の上限が記録義務化され、管理職への研修実施が各教委に求められる。",source:"文部科学省",domain:"mext.go.jp",date:"2026-03-29"},
+  {id:2,cat:"ICT・AI",isNew:true,title:"生徒の発言を自動文字起こし＆要約——授業記録AIツール「TeachLog」レビュー",summary:"授業中の発言をリアルタイムで記録・要約するAIツールを実際に使ってみた。精度・操作感・価格帯を現場目線で評価。",source:"EdTechZine",domain:"edtechzine.jp",date:"2026-03-27"},
+  {id:3,cat:"授業アイデア",isNew:false,title:"「問い」から始める探究学習——生徒が自分でテーマを設定するための3つの仕掛け",summary:"探究の最初のハードル「テーマが決まらない」を乗り越えるための実践的な授業設計を紹介。ワークシートのテンプレートも公開。",source:"教育新聞",domain:"kyoiku-shimbun.net",date:"2026-03-25"},
+  {id:4,cat:"研修・イベント",isNew:false,title:"【参加無料・オンライン】高校教員向けAI活用研修2026春季——定員200名・4月12日開催",summary:"生成AIを授業にどう取り入れるかを体験形式で学ぶオンライン研修。参加無料、録画配信あり。申込締切は4月8日。",source:"Yahoo!ニュース",domain:"news.yahoo.co.jp",date:"2026-03-24"},
+  {id:5,cat:"書籍・論文",isNew:false,title:"『問いのデザイン』——探究学習・SSH担当教員に読んでほしい一冊【TeacherBase書評】",summary:"「問いを立てる」ことの奥深さと実践法が学べる名著。SSH研究の立ち上げ期に読むと特に刺さる。全教科の先生に広くおすすめできる内容。",source:"TeacherBase",domain:"teacherbase.jp",date:"2026-03-22"},
+  {id:6,cat:"法改正",isNew:false,title:"個人情報保護法の改正で学校が注意すべき点——生徒データの取り扱いを再確認",summary:"2025年改正個人情報保護法の施行を受け、学校現場で見直すべき対応をリスト化。成績データ・写真・アンケート回答の管理に関する注意点を解説。",source:"朝日EduA",domain:"asahi.com/edu",date:"2026-03-20"},
+  {id:7,cat:"ICT・AI",isNew:false,title:"GIGAスクール端末の「その後」——3年間使ってわかった現場の課題と工夫",summary:"全国の教員へのアンケートをもとに、1人1台端末が定着した今だからこそ見えてきた活用の壁と、それを乗り越えた実践例を紹介。",source:"日経教育",domain:"nikkei.com",date:"2026-03-18"},
+  {id:8,cat:"授業アイデア",isNew:false,title:"物理の授業で「シミュレーション×AI」——生徒が自分でプログラムを作る実践",summary:"Pythonで電場シミュレーターを作る授業の実践報告。AIを使って生徒自身がコードを書く体験を通じ、科学的思考と試行錯誤の力を育む。",source:"TeacherBase",domain:"teacherbase.jp",date:"2026-03-15"},
+];
+const ABBR={"文部科学省":"文科省","教育新聞":"教新","EdTechZine":"EdTech","Yahoo!ニュース":"Yahoo!","TeacherBase":"TB","朝日EduA":"朝日","日経教育":"日経"};
+
+function loadClicks(){try{const s=JSON.parse(localStorage.getItem('tb_nc')||'{}');NEWS.forEach(n=>{n.clicks=s[n.id]||0;});}catch(e){NEWS.forEach(n=>{n.clicks=0;});}}
+function saveClick(id){try{const s=JSON.parse(localStorage.getItem('tb_nc')||'{}');s[id]=(s[id]||0)+1;localStorage.setItem('tb_nc',JSON.stringify(s));NEWS.find(n=>n.id===id).clicks=s[id];}catch(e){}}
+
+let activeCat='all',searchQuery='',sortBy='new';
+
+// URLパラメータでカテゴリ初期化
+const urlCat=new URLSearchParams(location.search).get('cat');
+if(urlCat) activeCat=urlCat;
+
+function renderPopular(){
+  const top=[...NEWS].sort((a,b)=>b.clicks-a.clicks).slice(0,5);
+  document.getElementById('popular-list').innerHTML=top.map((n,i)=>`<a class="pop-item" href="#" data-id="${n.id}"><span class="pop-num">${i+1}</span><span class="pop-title">${n.title}</span></a>`).join('');
+  document.querySelectorAll('#popular-list .pop-item').forEach(el=>{
+    el.addEventListener('click',e=>{e.preventDefault();saveClick(+el.dataset.id);renderPopular();});
+  });
+}
+function updateChips(){
+  const chips=[];
+  if(activeCat!=='all')chips.push(`<span class="active-filter-chip">${activeCat}<button onclick="clearCat()">×</button></span>`);
+  if(searchQuery)chips.push(`<span class="active-filter-chip">"${searchQuery}"<button onclick="clearSearch()">×</button></span>`);
+  document.getElementById('active-filters').innerHTML=chips.join('');
+}
+window.clearCat=()=>{activeCat='all';document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.toggle('active',e.dataset.cat==='all'));refresh();};
+window.clearSearch=()=>{searchQuery='';document.getElementById('search-input').value='';refresh();};
+
+function renderNews(){
+  let f=NEWS.filter(n=>{
+    const cOk=activeCat==='all'||n.cat===activeCat;
+    const q=searchQuery.toLowerCase();
+    return cOk&&(!q||n.title.includes(q)||n.summary.includes(q)||n.source.includes(q));
+  });
+  if(sortBy==='popular')f.sort((a,b)=>b.clicks-a.clicks);
+  else f.sort((a,b)=>b.date.localeCompare(a.date));
+  document.getElementById('count-display').textContent=f.length;
+  if(!f.length){document.getElementById('news-grid').innerHTML='<div class="empty-state"><div style="font-size:36px">📭</div><p>条件に合う記事が見つかりませんでした。</p></div>';return;}
+  document.getElementById('news-grid').innerHTML=f.map((n,i)=>{
+    const abbr=ABBR[n.source]||n.source.slice(0,4);
+    const feat=i===0&&activeCat==='all'&&!searchQuery&&sortBy==='new';
+    return `<a class="news-card${feat?' featured':''}" href="#" data-id="${n.id}">
+      <div class="card-thumb thumb-${n.cat}"><span class="media-abbr">${abbr}</span><span class="media-domain">${n.domain}</span></div>
+      <div class="card-body">
+        <div class="card-tags">${n.isNew?'<span class="ctag ctag-new">NEW</span>':''}<span class="ctag ctag-${n.cat}">${n.cat}</span></div>
+        <div class="card-title">${n.title}</div>
+        <div class="card-summary">${n.summary}</div>
+        <div class="card-footer"><span class="card-meta">${n.date.replace(/-/g,'.')}</span><span class="card-source">${n.source}</span></div>
+      </div></a>`;
+  }).join('');
+  document.querySelectorAll('#news-grid .news-card').forEach(el=>{
+    el.addEventListener('click',e=>{e.preventDefault();saveClick(+el.dataset.id);renderPopular();});
+  });
+}
+function refresh(){updateChips();renderNews();}
+
+// カテゴリ初期状態を反映
+document.querySelectorAll('#cat-filters .filter-item').forEach(el=>{
+  el.classList.toggle('active',el.dataset.cat===activeCat||(activeCat==='all'&&el.dataset.cat==='all'));
+  el.addEventListener('click',()=>{activeCat=el.dataset.cat;document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.remove('active'));el.classList.add('active');refresh();});
+});
+document.getElementById('search-input').addEventListener('input',e=>{searchQuery=e.target.value.trim();refresh();});
+document.getElementById('sort-select').addEventListener('change',e=>{sortBy=e.target.value;renderNews();});
+
+loadClicks();renderNews();renderPopular();
+</script>
+</body>
+</html>
