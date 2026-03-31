@@ -47,7 +47,8 @@ def fetch_all():
     seen_urls = set()
     for feed_info in RSS_FEEDS:
         try:
-            print(f"Fetching: {feed_info[\"url\"]}")
+            url_str = feed_info["url"]
+            print(f"Fetching: {url_str}")
             feed = feedparser.parse(feed_info["url"])
             for entry in feed.entries[:30]:
                 url = entry.get("link", "").strip()
@@ -75,7 +76,7 @@ def fetch_all():
                 })
             print(f"  -> {len(feed.entries)} entries found")
         except Exception as e:
-            print(f"Error fetching {feed_info[\"url\"]}: {e}")
+            print(f"Error fetching {feed_info['url']}: {e}")
 
     articles.sort(key=lambda x: x["date"], reverse=True)
     for a in articles[:3]:
@@ -87,8 +88,7 @@ def main():
     articles = fetch_all()
     with open("data/news.json", "w", encoding="utf-8") as f:
         json.dump(articles, f, ensure_ascii=False, indent=2)
-    print(f"
-Saved {len(articles)} articles to data/news.json")
+    print(f"Saved {len(articles)} articles to data/news.json")
 
 if __name__ == "__main__":
     main()
