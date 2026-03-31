@@ -59,32 +59,32 @@ nav a.active{font-weight:500;}
 .active-filter-chip button{background:none;border:none;color:white;cursor:pointer;font-size:13px;line-height:1;padding:0;opacity:0.8;}
 .sort-select{font-size:12px;font-family:inherit;color:var(--ink-mid);border:1px solid var(--sky-mid);background:var(--white);padding:5px 10px;border-radius:6px;cursor:pointer;outline:none;}
 .books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
-.book-card{background:var(--white);border-radius:12px;border:1px solid var(--sky-mid);padding:1.1rem;display:flex;flex-direction:column;gap:9px;transition:transform .15s,box-shadow .15s;cursor:pointer;}
+.book-card{background:var(--white);border-radius:12px;border:1px solid var(--sky-mid);padding:1.1rem;display:flex;flex-direction:column;gap:9px;transition:transform .15s,box-shadow .15s;}
 .book-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,133,200,0.11);}
-.book-cover{width:100%;height:76px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:30px;}
 .book-header{display:flex;gap:10px;align-items:flex-start;}
-.book-cover-sm{width:48px;height:64px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;}
-.book-tags-row{display:flex;flex-wrap:wrap;gap:4px;}
+.book-cover-sm{width:56px;height:76px;border-radius:4px;flex-shrink:0;object-fit:cover;background:var(--sky-mid);}
+.book-cover-placeholder{width:56px;height:76px;border-radius:4px;flex-shrink:0;background:linear-gradient(135deg,var(--sky-mid),var(--sky-deep));display:flex;align-items:center;justify-content:center;font-size:24px;}
+.book-tags-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:3px;}
 .btag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;}
 .btag-cat{background:var(--sky);color:var(--blue-dark);}
 .btag-sub{background:var(--mint);color:var(--sage);}
 .btag-sub::before{content:'#';opacity:0.7;font-size:9px;margin-right:1px;}
 .book-title{font-size:12px;font-weight:500;line-height:1.55;color:var(--ink);}
 .book-author{font-size:11px;color:var(--ink-soft);}
-.book-stars{display:flex;align-items:center;gap:4px;}
-.stars{color:var(--amber);font-size:12px;letter-spacing:-1px;}
-.stars-score{font-size:12px;font-weight:500;color:var(--ink-mid);}
-.stars-count{font-size:10px;color:var(--ink-soft);}
-.book-summary{font-size:12px;color:var(--ink-mid);line-height:1.7;background:var(--bg);border-radius:6px;padding:8px 10px;border-left:3px solid var(--blue);flex:1;}
+.book-comment{font-size:12px;color:var(--ink-mid);line-height:1.7;background:var(--bg);border-radius:6px;padding:8px 10px;border-left:3px solid var(--blue);flex:1;}
+.book-desc{font-size:11px;color:var(--ink-soft);line-height:1.65;margin-top:2px;}
 .book-meta-row{display:flex;gap:5px;flex-wrap:wrap;}
 .bchip{font-size:10px;color:var(--ink-soft);background:var(--sky);padding:2px 7px;border-radius:20px;}
 .book-buy{display:flex;gap:5px;margin-top:2px;}
-.btn-buy{flex:1;padding:6px 0;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s;}
+.btn-buy{flex:1;padding:6px 0;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s;text-decoration:none;display:flex;align-items:center;justify-content:center;}
 .btn-amzn{background:#FF9900;color:#111;}
 .btn-raku{background:#BF0000;color:white;}
 .btn-buy:hover{opacity:0.82;}
 .empty-state{grid-column:1/-1;text-align:center;padding:4rem;color:var(--ink-soft);}
 .empty-state p{font-size:15px;margin-top:8px;}
+.loading-state{grid-column:1/-1;text-align:center;padding:4rem;color:var(--ink-soft);}
+.loading-spinner{width:36px;height:36px;border:3px solid var(--sky-mid);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg)}}
 footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top:3rem;}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
 .footer-logo{font-family:'Playfair Display',serif;font-size:19px;color:white;}
@@ -124,7 +124,7 @@ footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top
     <div class="breadcrumb"><a href="index.html">TOP</a><span>›</span>おすすめ書籍</div>
     <h1 class="page-title">おすすめ書籍</h1>
     <p class="page-desc">現場教員の目線で選んだ、本当に使える本だけを紹介しています。</p>
-    <div class="book-count">現在 <strong id="count-display">12</strong> 冊を紹介中</div>
+    <div class="book-count">現在 <strong id="count-display">-</strong> 冊を紹介中</div>
   </div>
 </div>
 
@@ -173,13 +173,17 @@ footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top
     <div class="sort-row">
       <div class="active-filters" id="active-filters"></div>
       <select class="sort-select" id="sort-select">
-        <option value="default">おすすめ順</option>
-        <option value="rating">評価が高い順</option>
+        <option value="default">登録順</option>
         <option value="new">新しい順</option>
-        <option value="price-asc">価格が低い順</option>
+        <option value="pages-asc">ページ数が少ない順</option>
       </select>
     </div>
-    <div class="books-grid" id="books-grid"></div>
+    <div class="books-grid" id="books-grid">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>書籍データを読み込んでいます…</p>
+      </div>
+    </div>
   </main>
 </div>
 
@@ -195,89 +199,178 @@ footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top
 </footer>
 
 <script>
-const BOOKS=[
-  {title:"問いのデザイン——創造的対話のファシリテーション",author:"安斎勇樹・塩瀬隆之",cat:"探究・PBL",sub:["全教科共通"],emoji:"📖",cover:"var(--teal-pale)",rating:4.8,reviews:312,year:2020,pages:288,price:2200,summary:"探究・PBLを担当する先生に特におすすめ。「問いを立てる」ことの奥深さと実践法が学べる。SSH研究の立ち上げにも使えます。"},
-  {title:"深い学びを促す授業デザイン——逆向き設計で考える",author:"西岡加名恵",cat:"授業設計",sub:["全教科共通"],emoji:"📘",cover:"var(--sky)",rating:4.5,reviews:187,year:2022,pages:224,price:1980,summary:"「まず評価を決めてから授業を設計する」逆向き設計の入門書。単元計画を見直したい先生に刺さります。"},
-  {title:"教師のための法律入門 第4版",author:"坂田仰",cat:"働き方・法律",sub:["全教科共通"],emoji:"📗",cover:"var(--mint)",rating:4.7,reviews:248,year:2023,pages:336,price:2640,summary:"保護者対応・体罰・個人情報など学校現場でリアルに起きる問題を法律面から解説。職員室に一冊置いておきたい。"},
-  {title:"科学的思考力を育てる授業づくり",author:"鈴木誠",cat:"授業設計",sub:["理科","物理"],emoji:"📙",cover:"var(--amber-pale)",rating:4.4,reviews:96,year:2021,pages:256,price:2420,summary:"物理の「なぜ？」を引き出す授業づくりの実践集。実験の組み立て方・発問設計まで具体例が豊富。"},
-  {title:"学級経営の達人——35人をまとめるスキル",author:"田中博之",cat:"学級経営",sub:["全教科共通"],emoji:"🏫",cover:"var(--coral-pale)",rating:4.3,reviews:154,year:2021,pages:208,price:1760,summary:"学級開きから保護者対応まで、担任1年目でも実践できる具体的なスキルが凝縮された一冊。"},
-  {title:"ChatGPT×教育——AIと共に学ぶ授業設計",author:"西田光昭",cat:"ICT・DX",sub:["全教科共通","情報"],emoji:"🤖",cover:"var(--sky)",rating:4.6,reviews:203,year:2023,pages:192,price:1980,summary:"教員向けAI活用の決定版。授業への組み込み方から生徒への説明まで、すぐ使えるアイデアが満載。"},
-  {title:"探究学習を成功させる——高校PBLの設計と実践",author:"藤原和博",cat:"探究・PBL",sub:["全教科共通"],emoji:"🔍",cover:"var(--teal-pale)",rating:4.5,reviews:128,year:2022,pages:240,price:2200,summary:"高校での探究学習の立ち上げから評価まで一冊で完結。実際の授業記録が豊富で参考にしやすい。"},
-  {title:"英語授業を変えるインタラクション技術",author:"池田真",cat:"授業設計",sub:["英語"],emoji:"🌍",cover:"var(--sky)",rating:4.4,reviews:89,year:2021,pages:216,price:2090,summary:"英語の「話す」「聞く」活動をどう設計するか。スピーキングから技術英語まで幅広く使える発問・活動集。"},
-  {title:"数学の美しさを伝える授業",author:"礒田正美",cat:"授業設計",sub:["数学"],emoji:"📐",cover:"var(--amber-pale)",rating:4.5,reviews:112,year:2020,pages:232,price:2090,summary:"「数学嫌い」を減らしたい先生必読。証明の面白さや数の美しさを生徒に伝えるための授業構成が学べる。"},
-  {title:"GIGAスクール時代のICT活用術",author:"堀田龍也",cat:"ICT・DX",sub:["全教科共通","情報"],emoji:"💻",cover:"var(--blue-pale)",rating:4.3,reviews:176,year:2022,pages:200,price:1870,summary:"1人1台端末時代の授業設計の基本がわかる。特定のアプリに依存せず原則から学べるのが強み。"},
-  {title:"担任として伝えたいこと——進路指導の哲学",author:"小林公夫",cat:"進路",sub:["全教科共通"],emoji:"🎓",cover:"var(--mint)",rating:4.2,reviews:67,year:2021,pages:176,price:1650,summary:"大学入試だけでない、本当の意味での進路指導とは何かを問い直す一冊。担任として大切にしたい視点が見つかる。"},
-  {title:"先生のための働き方改革——職員室から変える",author:"妹尾昌俊",cat:"働き方・法律",sub:["全教科共通"],emoji:"⏰",cover:"var(--coral-pale)",rating:4.6,reviews:290,year:2023,pages:224,price:1760,summary:"「忙しさ」の構造から変えるための実践的な提案集。管理職・教員どちらにも刺さる内容。読後に職員室の空気が変わる。"},
-];
+let BOOKS = [];
 
-let activeCat='all';
-let activeSubs=new Set();
-let searchQuery='';
-let sortBy='default';
+// カテゴリごとの絵文字（表紙画像がない場合のフォールバック）
+const CAT_EMOJI = {
+  "授業設計":   "📘",
+  "学級経営":   "🏫",
+  "探究・PBL":  "🔍",
+  "進路":       "🎓",
+  "ICT・DX":    "💻",
+  "働き方・法律":"📗",
+  "教育全般":   "📖",
+};
 
-function matchesSub(b){if(activeSubs.size===0)return true;return b.sub.some(s=>activeSubs.has(s));}
+let activeCat = 'all';
+let activeSubs = new Set();
+let searchQuery = '';
+let sortBy = 'default';
 
-function renderBooks(){
-  let f=BOOKS.filter(b=>{
-    const cOk=activeCat==='all'||b.cat===activeCat;
-    const sOk=matchesSub(b);
-    const q=searchQuery.toLowerCase();
-    const qOk=!q||b.title.includes(q)||b.author.includes(q)||b.sub.some(s=>s.includes(q));
-    return cOk&&sOk&&qOk;
+function matchesSub(b) {
+  if (activeSubs.size === 0) return true;
+  return (b.tags || []).some(s => activeSubs.has(s));
+}
+
+function renderBooks() {
+  let f = BOOKS.filter(b => {
+    const cOk = activeCat === 'all' || b.category === activeCat;
+    const sOk = matchesSub(b);
+    const q = searchQuery.toLowerCase();
+    const qOk = !q ||
+      (b.title || '').toLowerCase().includes(q) ||
+      (b.author || '').toLowerCase().includes(q) ||
+      (b.tags || []).some(s => s.includes(q));
+    return cOk && sOk && qOk;
   });
-  if(sortBy==='rating')f.sort((a,b)=>b.rating-a.rating);
-  else if(sortBy==='new')f.sort((a,b)=>b.year-a.year);
-  else if(sortBy==='price-asc')f.sort((a,b)=>a.price-b.price);
-  document.getElementById('count-display').textContent=f.length;
-  if(!f.length){document.getElementById('books-grid').innerHTML='<div class="empty-state"><div style="font-size:36px">📭</div><p>条件に合う書籍が見つかりませんでした。</p></div>';return;}
-  document.getElementById('books-grid').innerHTML=f.map(b=>{
-    const fs=Math.round(b.rating);
-    const ss='★'.repeat(fs)+'☆'.repeat(5-fs);
-    const subTags=b.sub.map(s=>`<span class="btag btag-sub">${s}</span>`).join('');
-    return `<div class="book-card">
-      <div class="book-header">
-        <div class="book-cover-sm" style="background:${b.cover}">${b.emoji}</div>
-        <div style="flex:1;min-width:0;">
-          <div class="book-tags-row"><span class="btag btag-cat">${b.cat}</span>${subTags}</div>
-          <div class="book-title">${b.title}</div>
-          <div class="book-author">${b.author}</div>
-        </div>
-      </div>
-      <div class="book-stars"><span class="stars">${ss}</span><span class="stars-score">${b.rating}</span><span class="stars-count">（Amazon ${b.reviews}件）</span></div>
-      <div class="book-summary">${b.summary}</div>
-      <div class="book-meta-row"><span class="bchip">📄 ${b.pages}p</span><span class="bchip">🗓 ${b.year}年</span><span class="bchip">¥${b.price.toLocaleString()}</span></div>
-      <div class="book-buy"><button class="btn-buy btn-amzn">Amazonで見る</button><button class="btn-buy btn-raku">楽天で見る</button></div>
-    </div>`;
+
+  if (sortBy === 'new') f.sort((a,b) => (b.year || 0) - (a.year || 0));
+  else if (sortBy === 'pages-asc') f.sort((a,b) => (a.pages || 9999) - (b.pages || 9999));
+
+  document.getElementById('count-display').textContent = f.length;
+
+  if (!f.length) {
+    document.getElementById('books-grid').innerHTML =
+      '<div class="empty-state"><div style="font-size:36px">📭</div><p>条件に合う書籍が見つかりませんでした。</p></div>';
+    return;
+  }
+
+  document.getElementById('books-grid').innerHTML = f.map(b => {
+    const emoji = CAT_EMOJI[b.category] || '📚';
+    const coverHtml = b.cover_url
+      ? '<img class="book-cover-sm" src="' + b.cover_url + '" alt="' + (b.title || '') + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+        + '<div class="book-cover-placeholder" style="display:none">' + emoji + '</div>'
+      : '<div class="book-cover-placeholder">' + emoji + '</div>';
+
+    const subTags = (b.tags || []).map(s =>
+      '<span class="btag btag-sub">' + s + '</span>'
+    ).join('');
+
+    const metaChips = [];
+    if (b.pages) metaChips.push('<span class="bchip">📄 ' + b.pages + 'p</span>');
+    if (b.year)  metaChips.push('<span class="bchip">🗓 ' + b.year + '年</span>');
+
+    const amazonUrl  = b.amazon_url  || 'https://www.amazon.co.jp/s?k=' + b.isbn;
+    const rakutenUrl = b.rakuten_url || 'https://books.rakuten.co.jp/search?sitem=' + b.isbn;
+
+    // 表示用テキスト：管理者コメント優先、なければ APIのdescription
+    const bodyText = b.comment || b.description || '';
+
+    return '<div class="book-card">'
+      + '<div class="book-header">'
+      +   '<div style="display:flex;flex-direction:column;align-items:center;gap:0">' + coverHtml + '</div>'
+      +   '<div style="flex:1;min-width:0;">'
+      +     '<div class="book-tags-row"><span class="btag btag-cat">' + (b.category || '') + '</span>' + subTags + '</div>'
+      +     '<div class="book-title">' + (b.title || '（タイトル取得中）') + '</div>'
+      +     '<div class="book-author">' + (b.author || '') + '</div>'
+      +   '</div>'
+      + '</div>'
+      + (bodyText ? '<div class="book-comment">' + bodyText + '</div>' : '')
+      + (metaChips.length ? '<div class="book-meta-row">' + metaChips.join('') + '</div>' : '')
+      + '<div class="book-buy">'
+      +   '<a class="btn-buy btn-amzn" href="' + amazonUrl + '" target="_blank" rel="noopener">Amazonで見る</a>'
+      +   '<a class="btn-buy btn-raku" href="' + rakutenUrl + '" target="_blank" rel="noopener">楽天で見る</a>'
+      + '</div>'
+      + '</div>';
   }).join('');
 }
 
-function updateChips(){
-  const chips=[];
-  if(activeCat!=='all')chips.push(`<span class="active-filter-chip">${activeCat}<button onclick="clearCat()">×</button></span>`);
-  activeSubs.forEach(s=>chips.push(`<span class="active-filter-chip">#${s}<button onclick="clearSub('${s}')">×</button></span>`));
-  if(searchQuery)chips.push(`<span class="active-filter-chip">"${searchQuery}"<button onclick="clearSearch()">×</button></span>`);
-  document.getElementById('active-filters').innerHTML=chips.join('');
+function updateChips() {
+  const chips = [];
+  if (activeCat !== 'all') chips.push(
+    '<span class="active-filter-chip">' + activeCat + '<button onclick="clearCat()">×</button></span>'
+  );
+  activeSubs.forEach(s => chips.push(
+    '<span class="active-filter-chip">#' + s + '<button onclick="clearSub(\'' + s + '\')">×</button></span>'
+  ));
+  if (searchQuery) chips.push(
+    '<span class="active-filter-chip">"' + searchQuery + '"<button onclick="clearSearch()">×</button></span>'
+  );
+  document.getElementById('active-filters').innerHTML = chips.join('');
 }
-window.clearCat=()=>{activeCat='all';document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.toggle('active',e.dataset.cat==='all'));refresh();};
-window.clearSub=s=>{activeSubs.delete(s);document.querySelector(`.htag[data-sub="${s}"]`)?.classList.remove('active');updateAllBtn();refresh();};
-window.clearSearch=()=>{searchQuery='';document.getElementById('search-input').value='';refresh();};
-function updateAllBtn(){document.querySelector('.htag[data-sub="all"]')?.classList.toggle('active',activeSubs.size===0);}
-function refresh(){updateChips();renderBooks();}
 
-document.querySelectorAll('#cat-filters .filter-item').forEach(el=>{
-  el.addEventListener('click',()=>{activeCat=el.dataset.cat;document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.remove('active'));el.classList.add('active');refresh();});
-});
-document.querySelectorAll('#sub-filters .htag').forEach(el=>{
-  el.addEventListener('click',()=>{
-    const v=el.dataset.sub;
-    if(v==='all'){activeSubs.clear();document.querySelectorAll('#sub-filters .htag').forEach(e=>e.classList.remove('active'));el.classList.add('active');}
-    else{document.querySelector('.htag[data-sub="all"]').classList.remove('active');if(activeSubs.has(v)){activeSubs.delete(v);el.classList.remove('active');}else{activeSubs.add(v);el.classList.add('active');}updateAllBtn();}
+window.clearCat = () => {
+  activeCat = 'all';
+  document.querySelectorAll('#cat-filters .filter-item').forEach(e =>
+    e.classList.toggle('active', e.dataset.cat === 'all'));
+  refresh();
+};
+window.clearSub = s => {
+  activeSubs.delete(s);
+  document.querySelector('.htag[data-sub="' + s + '"]')?.classList.remove('active');
+  updateAllBtn();
+  refresh();
+};
+window.clearSearch = () => {
+  searchQuery = '';
+  document.getElementById('search-input').value = '';
+  refresh();
+};
+
+function updateAllBtn() {
+  document.querySelector('.htag[data-sub="all"]')?.classList.toggle('active', activeSubs.size === 0);
+}
+
+function refresh() { updateChips(); renderBooks(); }
+
+// イベント登録
+document.querySelectorAll('#cat-filters .filter-item').forEach(el => {
+  el.addEventListener('click', () => {
+    activeCat = el.dataset.cat;
+    document.querySelectorAll('#cat-filters .filter-item').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
     refresh();
   });
 });
-document.getElementById('search-input').addEventListener('input',e=>{searchQuery=e.target.value.trim();refresh();});
-document.getElementById('sort-select').addEventListener('change',e=>{sortBy=e.target.value;refresh();});
-renderBooks();
+
+document.querySelectorAll('#sub-filters .htag').forEach(el => {
+  el.addEventListener('click', () => {
+    const v = el.dataset.sub;
+    if (v === 'all') {
+      activeSubs.clear();
+      document.querySelectorAll('#sub-filters .htag').forEach(e => e.classList.remove('active'));
+      el.classList.add('active');
+    } else {
+      document.querySelector('.htag[data-sub="all"]').classList.remove('active');
+      if (activeSubs.has(v)) { activeSubs.delete(v); el.classList.remove('active'); }
+      else { activeSubs.add(v); el.classList.add('active'); }
+      updateAllBtn();
+    }
+    refresh();
+  });
+});
+
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQuery = e.target.value.trim();
+  refresh();
+});
+document.getElementById('sort-select').addEventListener('change', e => {
+  sortBy = e.target.value;
+  refresh();
+});
+
+// data/books.json を読み込んで表示
+fetch('data/books.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    BOOKS = data;
+    refresh();
+  })
+  .catch(err => {
+    console.error('books.json の読み込みに失敗:', err);
+    document.getElementById('books-grid').innerHTML =
+      '<div class="empty-state"><div style="font-size:36px">⚠️</div><p>書籍データの読み込みに失敗しました。しばらく後にお試しください。</p></div>';
+  });
 </script>
 </body>
 </html>

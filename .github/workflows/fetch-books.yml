@@ -1,0 +1,37 @@
+name: Fetch Books
+
+on:
+  schedule:
+    # 毎週月曜 UTC 22:00 = 火曜 JST 07:00
+    - cron: "0 22 * * 1"
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Fetch book data from Google Books API
+        run: python scripts/fetch_books.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/books.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update books.json [skip ci]"
+            git push
+          fi
