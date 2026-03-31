@@ -31,8 +31,10 @@ nav a.active{font-weight:500;}
 .breadcrumb span{margin:0 6px;}
 .page-title{font-family:'Noto Serif JP',serif;font-size:28px;font-weight:600;margin-bottom:6px;}
 .page-desc{font-size:13px;color:var(--ink-mid);line-height:1.85;}
-.news-count{display:inline-flex;align-items:center;gap:6px;margin-top:14px;background:var(--white);border:1px solid var(--sky-mid);border-radius:20px;padding:4px 14px;font-size:13px;color:var(--ink-mid);}
+.news-meta-row{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.news-count{display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--sky-mid);border-radius:20px;padding:4px 14px;font-size:13px;color:var(--ink-mid);}
 .news-count strong{color:var(--blue);font-size:16px;font-weight:600;}
+.last-updated{font-size:11px;color:var(--ink-soft);}
 .main-wrap{max-width:1100px;margin:2rem auto;padding:0 2rem;display:grid;grid-template-columns:230px 1fr;gap:2rem;}
 .filter-sidebar{display:flex;flex-direction:column;gap:1.2rem;}
 .filter-block{background:var(--white);border-radius:12px;border:1px solid var(--sky-mid);padding:1rem;}
@@ -69,6 +71,7 @@ nav a.active{font-weight:500;}
 .thumb-ICT・AI{background:linear-gradient(135deg,#2260a0,#3a85c8);}
 .thumb-研修・イベント{background:linear-gradient(135deg,#2a8898,#3aabbf);}
 .thumb-書籍・論文{background:linear-gradient(135deg,#5a50a8,#7c6fcd);}
+.thumb-default{background:linear-gradient(135deg,#607080,#8090a0);}
 .card-body{padding:1rem;display:flex;flex-direction:column;gap:7px;flex:1;}
 .card-tags{display:flex;gap:5px;flex-wrap:wrap;}
 .ctag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;}
@@ -88,6 +91,9 @@ nav a.active{font-weight:500;}
 .news-card.featured .card-title{font-size:16px;}
 .empty-state{grid-column:1/-1;text-align:center;padding:4rem;color:var(--ink-soft);}
 .empty-state p{font-size:15px;margin-top:8px;}
+.loading-state{grid-column:1/-1;text-align:center;padding:4rem;color:var(--ink-soft);}
+.loading-spinner{width:36px;height:36px;border:3px solid var(--sky-mid);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg)}}
 footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top:3rem;}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
 .footer-logo{font-family:'Playfair Display',serif;font-size:19px;color:white;}
@@ -123,8 +129,11 @@ footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top
   <div class="page-hero-inner">
     <div class="breadcrumb"><a href="index.html">TOP</a><span>›</span>ニュース</div>
     <h1 class="page-title">教育ニュース</h1>
-    <p class="page-desc">文科省・教育新聞・各種メディアから、教員に関係する情報を自動収集しています。</p>
-    <div class="news-count">現在 <strong id="count-display">8</strong> 件表示中</div>
+    <p class="page-desc">文科省・教育新聞・EdTechZineから、教員に関係する情報を自動収集しています。</p>
+    <div class="news-meta-row">
+      <div class="news-count">現在 <strong id="count-display">-</strong> 件表示中</div>
+      <span class="last-updated" id="last-updated"></span>
+    </div>
   </div>
 </div>
 
@@ -162,7 +171,12 @@ footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top
         <option value="popular">よく読まれている順</option>
       </select>
     </div>
-    <div class="news-grid" id="news-grid"></div>
+    <div class="news-grid" id="news-grid">
+      <div class="loading-state">
+        <div class="loading-spinner"></div>
+        <p>ニュースを読み込んでいます…</p>
+      </div>
+    </div>
   </main>
 </div>
 
@@ -178,80 +192,146 @@ footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top
 </footer>
 
 <script>
-const NEWS=[
-  {id:1,cat:"法改正",isNew:true,title:"給特法改正で何が変わる？ 2026年度から適用される残業上限規制を現場目線で解説",summary:"4月から施行される給特法改正の要点を整理。月45時間・年360時間の上限が記録義務化され、管理職への研修実施が各教委に求められる。",source:"文部科学省",domain:"mext.go.jp",date:"2026-03-29"},
-  {id:2,cat:"ICT・AI",isNew:true,title:"生徒の発言を自動文字起こし＆要約——授業記録AIツール「TeachLog」レビュー",summary:"授業中の発言をリアルタイムで記録・要約するAIツールを実際に使ってみた。精度・操作感・価格帯を現場目線で評価。",source:"EdTechZine",domain:"edtechzine.jp",date:"2026-03-27"},
-  {id:3,cat:"授業アイデア",isNew:false,title:"「問い」から始める探究学習——生徒が自分でテーマを設定するための3つの仕掛け",summary:"探究の最初のハードル「テーマが決まらない」を乗り越えるための実践的な授業設計を紹介。ワークシートのテンプレートも公開。",source:"教育新聞",domain:"kyoiku-shimbun.net",date:"2026-03-25"},
-  {id:4,cat:"研修・イベント",isNew:false,title:"【参加無料・オンライン】高校教員向けAI活用研修2026春季——定員200名・4月12日開催",summary:"生成AIを授業にどう取り入れるかを体験形式で学ぶオンライン研修。参加無料、録画配信あり。申込締切は4月8日。",source:"Yahoo!ニュース",domain:"news.yahoo.co.jp",date:"2026-03-24"},
-  {id:5,cat:"書籍・論文",isNew:false,title:"『問いのデザイン』——探究学習・SSH担当教員に読んでほしい一冊【TeacherBase書評】",summary:"「問いを立てる」ことの奥深さと実践法が学べる名著。SSH研究の立ち上げ期に読むと特に刺さる。全教科の先生に広くおすすめできる内容。",source:"TeacherBase",domain:"teacherbase.jp",date:"2026-03-22"},
-  {id:6,cat:"法改正",isNew:false,title:"個人情報保護法の改正で学校が注意すべき点——生徒データの取り扱いを再確認",summary:"2025年改正個人情報保護法の施行を受け、学校現場で見直すべき対応をリスト化。成績データ・写真・アンケート回答の管理に関する注意点を解説。",source:"朝日EduA",domain:"asahi.com/edu",date:"2026-03-20"},
-  {id:7,cat:"ICT・AI",isNew:false,title:"GIGAスクール端末の「その後」——3年間使ってわかった現場の課題と工夫",summary:"全国の教員へのアンケートをもとに、1人1台端末が定着した今だからこそ見えてきた活用の壁と、それを乗り越えた実践例を紹介。",source:"日経教育",domain:"nikkei.com",date:"2026-03-18"},
-  {id:8,cat:"授業アイデア",isNew:false,title:"物理の授業で「シミュレーション×AI」——生徒が自分でプログラムを作る実践",summary:"Pythonで電場シミュレーターを作る授業の実践報告。AIを使って生徒自身がコードを書く体験を通じ、科学的思考と試行錯誤の力を育む。",source:"TeacherBase",domain:"teacherbase.jp",date:"2026-03-15"},
-];
-const ABBR={"文部科学省":"文科省","教育新聞":"教新","EdTechZine":"EdTech","Yahoo!ニュース":"Yahoo!","TeacherBase":"TB","朝日EduA":"朝日","日経教育":"日経"};
+let NEWS = [];
+const ABBR = {"文部科学省":"文科省","教育新聞":"教新","EdTechZine":"EdTech","Yahoo!ニュース":"Yahoo!","TeacherBase":"TB","朝日EduA":"朝日","日経教育":"日経"};
 
-function loadClicks(){try{const s=JSON.parse(localStorage.getItem('tb_nc')||'{}');NEWS.forEach(n=>{n.clicks=s[n.id]||0;});}catch(e){NEWS.forEach(n=>{n.clicks=0;});}}
-function saveClick(id){try{const s=JSON.parse(localStorage.getItem('tb_nc')||'{}');s[id]=(s[id]||0)+1;localStorage.setItem('tb_nc',JSON.stringify(s));NEWS.find(n=>n.id===id).clicks=s[id];}catch(e){}}
+function getAbbr(source) {
+  return ABBR[source] || source.slice(0, 4);
+}
 
-let activeCat='all',searchQuery='',sortBy='new';
+function loadClicks() {
+  try {
+    const s = JSON.parse(localStorage.getItem('tb_nc') || '{}');
+    NEWS.forEach(n => { n.clicks = s[n.id] || 0; });
+  } catch(e) {
+    NEWS.forEach(n => { n.clicks = 0; });
+  }
+}
+function saveClick(id) {
+  try {
+    const s = JSON.parse(localStorage.getItem('tb_nc') || '{}');
+    s[id] = (s[id] || 0) + 1;
+    localStorage.setItem('tb_nc', JSON.stringify(s));
+    const item = NEWS.find(n => n.id === id);
+    if (item) item.clicks = s[id];
+  } catch(e) {}
+}
 
-// URLパラメータでカテゴリ初期化
-const urlCat=new URLSearchParams(location.search).get('cat');
-if(urlCat) activeCat=urlCat;
+let activeCat = 'all', searchQuery = '', sortBy = 'new';
 
-function renderPopular(){
-  const top=[...NEWS].sort((a,b)=>b.clicks-a.clicks).slice(0,5);
-  document.getElementById('popular-list').innerHTML=top.map((n,i)=>`<a class="pop-item" href="#" data-id="${n.id}"><span class="pop-num">${i+1}</span><span class="pop-title">${n.title}</span></a>`).join('');
-  document.querySelectorAll('#popular-list .pop-item').forEach(el=>{
-    el.addEventListener('click',e=>{e.preventDefault();saveClick(+el.dataset.id);renderPopular();});
+const urlCat = new URLSearchParams(location.search).get('cat');
+if (urlCat) activeCat = urlCat;
+
+function renderPopular() {
+  const top = [...NEWS].sort((a,b) => b.clicks - a.clicks).slice(0, 5);
+  document.getElementById('popular-list').innerHTML = top.map((n,i) =>
+    `<a class="pop-item" href="${n.url || '#'}" target="${n.url && n.url !== '#' ? '_blank' : '_self'}" rel="noopener" data-id="${n.id}">
+      <span class="pop-num">${i+1}</span>
+      <span class="pop-title">${n.title}</span>
+    </a>`
+  ).join('');
+  document.querySelectorAll('#popular-list .pop-item').forEach(el => {
+    el.addEventListener('click', () => { saveClick(+el.dataset.id); renderPopular(); });
   });
 }
-function updateChips(){
-  const chips=[];
-  if(activeCat!=='all')chips.push(`<span class="active-filter-chip">${activeCat}<button onclick="clearCat()">×</button></span>`);
-  if(searchQuery)chips.push(`<span class="active-filter-chip">"${searchQuery}"<button onclick="clearSearch()">×</button></span>`);
-  document.getElementById('active-filters').innerHTML=chips.join('');
-}
-window.clearCat=()=>{activeCat='all';document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.toggle('active',e.dataset.cat==='all'));refresh();};
-window.clearSearch=()=>{searchQuery='';document.getElementById('search-input').value='';refresh();};
 
-function renderNews(){
-  let f=NEWS.filter(n=>{
-    const cOk=activeCat==='all'||n.cat===activeCat;
-    const q=searchQuery.toLowerCase();
-    return cOk&&(!q||n.title.includes(q)||n.summary.includes(q)||n.source.includes(q));
+function updateChips() {
+  const chips = [];
+  if (activeCat !== 'all') chips.push(`<span class="active-filter-chip">${activeCat}<button onclick="clearCat()">×</button></span>`);
+  if (searchQuery) chips.push(`<span class="active-filter-chip">"${searchQuery}"<button onclick="clearSearch()">×</button></span>`);
+  document.getElementById('active-filters').innerHTML = chips.join('');
+}
+
+window.clearCat = () => {
+  activeCat = 'all';
+  document.querySelectorAll('#cat-filters .filter-item').forEach(e => e.classList.toggle('active', e.dataset.cat === 'all'));
+  refresh();
+};
+window.clearSearch = () => {
+  searchQuery = '';
+  document.getElementById('search-input').value = '';
+  refresh();
+};
+
+function renderNews() {
+  let f = NEWS.filter(n => {
+    const cOk = activeCat === 'all' || n.cat === activeCat;
+    const q = searchQuery.toLowerCase();
+    return cOk && (!q || n.title.includes(q) || (n.summary||'').includes(q) || n.source.includes(q));
   });
-  if(sortBy==='popular')f.sort((a,b)=>b.clicks-a.clicks);
-  else f.sort((a,b)=>b.date.localeCompare(a.date));
-  document.getElementById('count-display').textContent=f.length;
-  if(!f.length){document.getElementById('news-grid').innerHTML='<div class="empty-state"><div style="font-size:36px">📭</div><p>条件に合う記事が見つかりませんでした。</p></div>';return;}
-  document.getElementById('news-grid').innerHTML=f.map((n,i)=>{
-    const abbr=ABBR[n.source]||n.source.slice(0,4);
-    const feat=i===0&&activeCat==='all'&&!searchQuery&&sortBy==='new';
-    return `<a class="news-card${feat?' featured':''}" href="#" data-id="${n.id}">
-      <div class="card-thumb thumb-${n.cat}"><span class="media-abbr">${abbr}</span><span class="media-domain">${n.domain}</span></div>
+  if (sortBy === 'popular') f.sort((a,b) => b.clicks - a.clicks);
+  else f.sort((a,b) => b.date.localeCompare(a.date));
+
+  document.getElementById('count-display').textContent = f.length;
+
+  if (!f.length) {
+    document.getElementById('news-grid').innerHTML =
+      '<div class="empty-state"><div style="font-size:36px">📭</div><p>条件に合う記事が見つかりませんでした。</p></div>';
+    return;
+  }
+
+  document.getElementById('news-grid').innerHTML = f.map((n, i) => {
+    const abbr = getAbbr(n.source);
+    const feat = i === 0 && activeCat === 'all' && !searchQuery && sortBy === 'new';
+    const thumbCat = ['法改正','授業アイデア','ICT・AI','研修・イベント','書籍・論文'].includes(n.cat) ? n.cat : 'default';
+    const target = n.url && n.url !== '#' ? '_blank' : '_self';
+    return `<a class="news-card${feat ? ' featured' : ''}" href="${n.url || '#'}" target="${target}" rel="noopener" data-id="${n.id}">
+      <div class="card-thumb thumb-${thumbCat}">
+        <span class="media-abbr">${abbr}</span>
+        <span class="media-domain">${n.domain}</span>
+      </div>
       <div class="card-body">
-        <div class="card-tags">${n.isNew?'<span class="ctag ctag-new">NEW</span>':''}<span class="ctag ctag-${n.cat}">${n.cat}</span></div>
+        <div class="card-tags">
+          ${n.isNew ? '<span class="ctag ctag-new">NEW</span>' : ''}
+          <span class="ctag ctag-${n.cat}">${n.cat}</span>
+        </div>
         <div class="card-title">${n.title}</div>
-        <div class="card-summary">${n.summary}</div>
-        <div class="card-footer"><span class="card-meta">${n.date.replace(/-/g,'.')}</span><span class="card-source">${n.source}</span></div>
-      </div></a>`;
+        <div class="card-summary">${n.summary || ''}</div>
+        <div class="card-footer">
+          <span class="card-meta">${(n.date||'').replace(/-/g,'.')}</span>
+          <span class="card-source">${n.source}</span>
+        </div>
+      </div>
+    </a>`;
   }).join('');
-  document.querySelectorAll('#news-grid .news-card').forEach(el=>{
-    el.addEventListener('click',e=>{e.preventDefault();saveClick(+el.dataset.id);renderPopular();});
+
+  document.querySelectorAll('#news-grid .news-card').forEach(el => {
+    el.addEventListener('click', () => { saveClick(+el.dataset.id); renderPopular(); });
   });
 }
-function refresh(){updateChips();renderNews();}
 
-// カテゴリ初期状態を反映
-document.querySelectorAll('#cat-filters .filter-item').forEach(el=>{
-  el.classList.toggle('active',el.dataset.cat===activeCat||(activeCat==='all'&&el.dataset.cat==='all'));
-  el.addEventListener('click',()=>{activeCat=el.dataset.cat;document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.remove('active'));el.classList.add('active');refresh();});
+function refresh() { updateChips(); renderNews(); }
+
+document.querySelectorAll('#cat-filters .filter-item').forEach(el => {
+  el.classList.toggle('active', el.dataset.cat === activeCat || (activeCat === 'all' && el.dataset.cat === 'all'));
+  el.addEventListener('click', () => {
+    activeCat = el.dataset.cat;
+    document.querySelectorAll('#cat-filters .filter-item').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    refresh();
+  });
 });
-document.getElementById('search-input').addEventListener('input',e=>{searchQuery=e.target.value.trim();refresh();});
-document.getElementById('sort-select').addEventListener('change',e=>{sortBy=e.target.value;renderNews();});
+document.getElementById('search-input').addEventListener('input', e => { searchQuery = e.target.value.trim(); refresh(); });
+document.getElementById('sort-select').addEventListener('change', e => { sortBy = e.target.value; renderNews(); });
 
-loadClicks();renderNews();renderPopular();
+// data/news.json を読み込んで表示
+fetch('data/news.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    NEWS = data;
+    loadClicks();
+    if (NEWS.length > 0) {
+      const latest = NEWS.reduce((a,b) => a.date > b.date ? a : b);
+      document.getElementById('last-updated').textContent = '最終更新：' + latest.date.replace(/-/g,'.');
+    }
+    refresh();
+    renderPopular();
+  })
+  .catch(err => {
+    console.error('news.json の読み込みに失敗:', err);
+    document.getElementById('news-grid').innerHTML =
+      '<div class="empty-state"><div style="font-size:36px">⚠️</div><p>ニュースの読み込みに失敗しました。しばらく後にお試しください。</p></div>';
+  });
 </script>
 </body>
 </html>
