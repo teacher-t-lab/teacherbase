@@ -1,13 +1,1 @@
-[
-  {
-    "id": 1001,
-    "cat": "法改正",
-    "isNew": true,
-    "title": "ニュースを自動取得中です。しばらくお待ちください。",
-    "summary": "GitHub Actionsによる自動取得が設定されました。次回の定期実行（2日に1回、日本時間朝7時）でRSSフィードから最新ニュースが自動的に取得・更新されます。",
-    "source": "TeacherBase",
-    "domain": "teacher-t-lab.github.io",
-    "date": "2026-03-31",
-    "url": "#"
-  }
-]
+[]
