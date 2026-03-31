@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おすすめ書籍 | TeacherBase</title>
+<meta name="description" content="現場教員の目線で選んだ、本当に使える本だけを紹介。カテゴリ・教科タグで絞り込めます。">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#e8f4fd;--sky-mid:#d0e8f8;--sky-deep:#b8d8f0;--blue:#3a85c8;--blue-dark:#2260a0;--blue-pale:#f0f7fd;--teal:#3aabbf;--teal-pale:#e0f4f8;--mint:#e8f8f4;--sage:#4aaa88;--amber:#f0a830;--amber-pale:#fef8e8;--coral:#f07060;--coral-pale:#fef0ee;--white:#fff;--ink:#1e2d3d;--ink-mid:#3a5068;--ink-soft:#7090a8;--ink-faint:#aac0d0;--bg:#f4f8fc;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;}
+header{background:var(--white);border-bottom:1px solid var(--sky-mid);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(58,133,200,0.08);}
+.header-top{background:var(--blue);padding:5px 2rem;display:flex;justify-content:space-between;}
+.header-top-text{font-size:11px;color:rgba(255,255,255,0.75);letter-spacing:0.06em;}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 2rem;}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--teal));border-radius:9px;display:flex;align-items:center;justify-content:center;}
+.logo-mark svg{width:20px;height:20px;}
+.logo-main{font-family:'Playfair Display',serif;font-size:21px;color:var(--ink);display:block;line-height:1.1;}
+.logo-main span{color:var(--blue);}
+.logo-sub{font-size:10px;color:var(--ink-soft);letter-spacing:0.1em;display:block;}
+nav{display:flex;gap:4px;}
+nav a{color:var(--ink-mid);text-decoration:none;font-size:13px;padding:6px 12px;border-radius:6px;transition:background .15s,color .15s;}
+nav a:hover,nav a.active{background:var(--sky);color:var(--blue);}
+nav a.active{font-weight:500;}
+.page-hero{position:relative;min-height:200px;display:flex;align-items:flex-end;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1400&q=80');background-size:cover;background-position:center 40%;filter:brightness(0.55) saturate(0.8);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(20,36,56,0.92) 0%,rgba(20,36,56,0.55) 55%,rgba(20,36,56,0.2) 100%);}
+.page-hero-inner{position:relative;z-index:1;max-width:1100px;width:100%;margin:0 auto;padding:2rem 2rem 2.2rem;}
+.breadcrumb{font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:10px;}
+.breadcrumb a{color:rgba(255,255,255,0.8);text-decoration:none;}
+.breadcrumb span{margin:0 6px;}
+.page-title{font-family:'Noto Serif JP',serif;font-size:28px;font-weight:600;color:white;margin-bottom:6px;}
+.page-desc{font-size:13px;color:rgba(255,255,255,0.82);line-height:1.85;}
+.book-count{display:inline-flex;align-items:center;gap:6px;margin-top:14px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:4px 14px;font-size:13px;color:rgba(255,255,255,0.9);}
+.book-count strong{color:#7dd3fc;font-size:16px;font-weight:600;}
+.main-wrap{max-width:1100px;margin:2rem auto;padding:0 2rem;display:grid;grid-template-columns:230px 1fr;gap:2rem;}
+.filter-sidebar{display:flex;flex-direction:column;gap:1.2rem;}
+.filter-block{background:var(--white);border-radius:12px;border:1px solid var(--sky-mid);padding:1rem;}
+.filter-block-title{font-size:11px;font-weight:500;letter-spacing:0.1em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--sky-mid);}
+.filter-list{display:flex;flex-direction:column;gap:2px;}
+.filter-item{display:flex;align-items:center;padding:7px 8px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--ink-mid);transition:background .12s,color .12s;user-select:none;}
+.filter-item:hover{background:var(--sky);color:var(--blue);}
+.filter-item.active{background:var(--blue);color:white;}
+.hashtag-grid{display:flex;flex-wrap:wrap;gap:5px;}
+.htag{padding:3px 10px;border-radius:20px;font-size:12px;cursor:pointer;border:1.5px solid var(--sky-mid);background:var(--white);color:var(--ink-soft);transition:all .15s;user-select:none;font-family:inherit;}
+.htag::before{content:'#';opacity:0.6;font-size:10px;margin-right:1px;}
+.htag:hover{border-color:var(--blue);color:var(--blue);}
+.htag.active{background:var(--blue);color:white;border-color:var(--blue);}
+.htag.active::before{opacity:0.8;}
+.search-wrap{position:relative;}
+.search-input{width:100%;padding:8px 12px 8px 34px;border-radius:8px;border:1.5px solid var(--sky-mid);background:var(--white);font-size:13px;font-family:inherit;color:var(--ink);outline:none;transition:border-color .15s;}
+.search-input:focus{border-color:var(--blue);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:0.4;}
+.sort-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:8px;}
+.active-filters{display:flex;flex-wrap:wrap;gap:5px;flex:1;}
+.active-filter-chip{display:inline-flex;align-items:center;gap:5px;background:var(--blue);color:white;font-size:11px;padding:3px 10px;border-radius:20px;}
+.active-filter-chip button{background:none;border:none;color:white;cursor:pointer;font-size:13px;line-height:1;padding:0;opacity:0.8;}
+.sort-select{font-size:12px;font-family:inherit;color:var(--ink-mid);border:1px solid var(--sky-mid);background:var(--white);padding:5px 10px;border-radius:6px;cursor:pointer;outline:none;}
+.books-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.book-card{background:var(--white);border-radius:12px;border:1px solid var(--sky-mid);padding:1.1rem;display:flex;flex-direction:column;gap:9px;transition:transform .15s,box-shadow .15s;cursor:pointer;}
+.book-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(58,133,200,0.11);}
+.book-cover{width:100%;height:76px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:30px;}
+.book-header{display:flex;gap:10px;align-items:flex-start;}
+.book-cover-sm{width:48px;height:64px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.book-tags-row{display:flex;flex-wrap:wrap;gap:4px;}
+.btag{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;}
+.btag-cat{background:var(--sky);color:var(--blue-dark);}
+.btag-sub{background:var(--mint);color:var(--sage);}
+.btag-sub::before{content:'#';opacity:0.7;font-size:9px;margin-right:1px;}
+.book-title{font-size:12px;font-weight:500;line-height:1.55;color:var(--ink);}
+.book-author{font-size:11px;color:var(--ink-soft);}
+.book-stars{display:flex;align-items:center;gap:4px;}
+.stars{color:var(--amber);font-size:12px;letter-spacing:-1px;}
+.stars-score{font-size:12px;font-weight:500;color:var(--ink-mid);}
+.stars-count{font-size:10px;color:var(--ink-soft);}
+.book-summary{font-size:12px;color:var(--ink-mid);line-height:1.7;background:var(--bg);border-radius:6px;padding:8px 10px;border-left:3px solid var(--blue);flex:1;}
+.book-meta-row{display:flex;gap:5px;flex-wrap:wrap;}
+.bchip{font-size:10px;color:var(--ink-soft);background:var(--sky);padding:2px 7px;border-radius:20px;}
+.book-buy{display:flex;gap:5px;margin-top:2px;}
+.btn-buy{flex:1;padding:6px 0;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s;}
+.btn-amzn{background:#FF9900;color:#111;}
+.btn-raku{background:#BF0000;color:white;}
+.btn-buy:hover{opacity:0.82;}
+.empty-state{grid-column:1/-1;text-align:center;padding:4rem;color:var(--ink-soft);}
+.empty-state p{font-size:15px;margin-top:8px;}
+footer{background:var(--ink);color:rgba(255,255,255,0.6);padding:2rem;margin-top:3rem;}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-family:'Playfair Display',serif;font-size:19px;color:white;}
+.footer-logo span{color:var(--teal);}
+.footer-links{display:flex;gap:18px;font-size:12px;}
+.footer-links a{color:rgba(255,255,255,0.5);text-decoration:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.books-grid{animation:fadeUp .4s ease both;}
+@media(max-width:900px){.main-wrap{grid-template-columns:1fr;}.filter-sidebar{display:none;}.books-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.books-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <span class="header-top-text">教員のための、教員による情報メディア</span>
+    <span class="header-top-text">高校教員向け → 全校種へ拡大予定</span>
+  </div>
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+      <div><span class="logo-main">Teacher<span>Base</span></span><span class="logo-sub">教員のための総合情報メディア</span></div>
+    </a>
+    <nav>
+      <a href="news.html">ニュース</a>
+      <a href="news.html?cat=法改正">法改正</a>
+      <a href="books.html" class="active">書籍紹介</a>
+      <a href="index.html">TOP</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">TOP</a><span>›</span>おすすめ書籍</div>
+    <h1 class="page-title">おすすめ書籍</h1>
+    <p class="page-desc">現場教員の目線で選んだ、本当に使える本だけを紹介しています。</p>
+    <div class="book-count">現在 <strong id="count-display">12</strong> 冊を紹介中</div>
+  </div>
+</div>
+
+<div class="main-wrap">
+  <aside class="filter-sidebar">
+    <div class="filter-block">
+      <div class="filter-block-title">キーワード検索</div>
+      <div class="search-wrap">
+        <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="text" id="search-input" placeholder="書名・著者名で検索…">
+      </div>
+    </div>
+    <div class="filter-block">
+      <div class="filter-block-title">カテゴリ</div>
+      <div class="filter-list" id="cat-filters">
+        <div class="filter-item active" data-cat="all">すべて</div>
+        <div class="filter-item" data-cat="授業設計">授業設計・指導法</div>
+        <div class="filter-item" data-cat="学級経営">学級経営</div>
+        <div class="filter-item" data-cat="探究・PBL">探究・PBL</div>
+        <div class="filter-item" data-cat="進路">進路・大学受験</div>
+        <div class="filter-item" data-cat="ICT・DX">ICT・DX・AI活用</div>
+        <div class="filter-item" data-cat="働き方・法律">教員の働き方・法律</div>
+        <div class="filter-item" data-cat="教育全般">教育全般・エッセイ</div>
+      </div>
+    </div>
+    <div class="filter-block">
+      <div class="filter-block-title">教科タグ（複数選択可）</div>
+      <div class="hashtag-grid" id="sub-filters">
+        <button class="htag active" data-sub="all">すべて</button>
+        <button class="htag" data-sub="全教科共通">全教科共通</button>
+        <button class="htag" data-sub="理科">理科</button>
+        <button class="htag" data-sub="物理">物理</button>
+        <button class="htag" data-sub="化学">化学</button>
+        <button class="htag" data-sub="数学">数学</button>
+        <button class="htag" data-sub="英語">英語</button>
+        <button class="htag" data-sub="国語">国語</button>
+        <button class="htag" data-sub="社会">社会</button>
+        <button class="htag" data-sub="情報">情報</button>
+        <button class="htag" data-sub="実技系">実技系</button>
+      </div>
+      <p style="font-size:11px;color:var(--ink-faint);margin-top:8px;">複数タグをクリックでOR検索</p>
+    </div>
+  </aside>
+
+  <main>
+    <div class="sort-row">
+      <div class="active-filters" id="active-filters"></div>
+      <select class="sort-select" id="sort-select">
+        <option value="default">おすすめ順</option>
+        <option value="rating">評価が高い順</option>
+        <option value="new">新しい順</option>
+        <option value="price-asc">価格が低い順</option>
+      </select>
+    </div>
+    <div class="books-grid" id="books-grid"></div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Teacher<span>Base</span></div>
+    <div class="footer-links">
+      <a href="#">このサイトについて</a>
+      <a href="#">プライバシーポリシー</a>
+      <a href="#">お問い合わせ</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const BOOKS=[
+  {title:"問いのデザイン——創造的対話のファシリテーション",author:"安斎勇樹・塩瀬隆之",cat:"探究・PBL",sub:["全教科共通"],emoji:"📖",cover:"var(--teal-pale)",rating:4.8,reviews:312,year:2020,pages:288,price:2200,summary:"探究・PBLを担当する先生に特におすすめ。「問いを立てる」ことの奥深さと実践法が学べる。SSH研究の立ち上げにも使えます。"},
+  {title:"深い学びを促す授業デザイン——逆向き設計で考える",author:"西岡加名恵",cat:"授業設計",sub:["全教科共通"],emoji:"📘",cover:"var(--sky)",rating:4.5,reviews:187,year:2022,pages:224,price:1980,summary:"「まず評価を決めてから授業を設計する」逆向き設計の入門書。単元計画を見直したい先生に刺さります。"},
+  {title:"教師のための法律入門 第4版",author:"坂田仰",cat:"働き方・法律",sub:["全教科共通"],emoji:"📗",cover:"var(--mint)",rating:4.7,reviews:248,year:2023,pages:336,price:2640,summary:"保護者対応・体罰・個人情報など学校現場でリアルに起きる問題を法律面から解説。職員室に一冊置いておきたい。"},
+  {title:"科学的思考力を育てる授業づくり",author:"鈴木誠",cat:"授業設計",sub:["理科","物理"],emoji:"📙",cover:"var(--amber-pale)",rating:4.4,reviews:96,year:2021,pages:256,price:2420,summary:"物理の「なぜ？」を引き出す授業づくりの実践集。実験の組み立て方・発問設計まで具体例が豊富。"},
+  {title:"学級経営の達人——35人をまとめるスキル",author:"田中博之",cat:"学級経営",sub:["全教科共通"],emoji:"🏫",cover:"var(--coral-pale)",rating:4.3,reviews:154,year:2021,pages:208,price:1760,summary:"学級開きから保護者対応まで、担任1年目でも実践できる具体的なスキルが凝縮された一冊。"},
+  {title:"ChatGPT×教育——AIと共に学ぶ授業設計",author:"西田光昭",cat:"ICT・DX",sub:["全教科共通","情報"],emoji:"🤖",cover:"var(--sky)",rating:4.6,reviews:203,year:2023,pages:192,price:1980,summary:"教員向けAI活用の決定版。授業への組み込み方から生徒への説明まで、すぐ使えるアイデアが満載。"},
+  {title:"探究学習を成功させる——高校PBLの設計と実践",author:"藤原和博",cat:"探究・PBL",sub:["全教科共通"],emoji:"🔍",cover:"var(--teal-pale)",rating:4.5,reviews:128,year:2022,pages:240,price:2200,summary:"高校での探究学習の立ち上げから評価まで一冊で完結。実際の授業記録が豊富で参考にしやすい。"},
+  {title:"英語授業を変えるインタラクション技術",author:"池田真",cat:"授業設計",sub:["英語"],emoji:"🌍",cover:"var(--sky)",rating:4.4,reviews:89,year:2021,pages:216,price:2090,summary:"英語の「話す」「聞く」活動をどう設計するか。スピーキングから技術英語まで幅広く使える発問・活動集。"},
+  {title:"数学の美しさを伝える授業",author:"礒田正美",cat:"授業設計",sub:["数学"],emoji:"📐",cover:"var(--amber-pale)",rating:4.5,reviews:112,year:2020,pages:232,price:2090,summary:"「数学嫌い」を減らしたい先生必読。証明の面白さや数の美しさを生徒に伝えるための授業構成が学べる。"},
+  {title:"GIGAスクール時代のICT活用術",author:"堀田龍也",cat:"ICT・DX",sub:["全教科共通","情報"],emoji:"💻",cover:"var(--blue-pale)",rating:4.3,reviews:176,year:2022,pages:200,price:1870,summary:"1人1台端末時代の授業設計の基本がわかる。特定のアプリに依存せず原則から学べるのが強み。"},
+  {title:"担任として伝えたいこと——進路指導の哲学",author:"小林公夫",cat:"進路",sub:["全教科共通"],emoji:"🎓",cover:"var(--mint)",rating:4.2,reviews:67,year:2021,pages:176,price:1650,summary:"大学入試だけでない、本当の意味での進路指導とは何かを問い直す一冊。担任として大切にしたい視点が見つかる。"},
+  {title:"先生のための働き方改革——職員室から変える",author:"妹尾昌俊",cat:"働き方・法律",sub:["全教科共通"],emoji:"⏰",cover:"var(--coral-pale)",rating:4.6,reviews:290,year:2023,pages:224,price:1760,summary:"「忙しさ」の構造から変えるための実践的な提案集。管理職・教員どちらにも刺さる内容。読後に職員室の空気が変わる。"},
+];
+
+let activeCat='all';
+let activeSubs=new Set();
+let searchQuery='';
+let sortBy='default';
+
+function matchesSub(b){if(activeSubs.size===0)return true;return b.sub.some(s=>activeSubs.has(s));}
+
+function renderBooks(){
+  let f=BOOKS.filter(b=>{
+    const cOk=activeCat==='all'||b.cat===activeCat;
+    const sOk=matchesSub(b);
+    const q=searchQuery.toLowerCase();
+    const qOk=!q||b.title.includes(q)||b.author.includes(q)||b.sub.some(s=>s.includes(q));
+    return cOk&&sOk&&qOk;
+  });
+  if(sortBy==='rating')f.sort((a,b)=>b.rating-a.rating);
+  else if(sortBy==='new')f.sort((a,b)=>b.year-a.year);
+  else if(sortBy==='price-asc')f.sort((a,b)=>a.price-b.price);
+  document.getElementById('count-display').textContent=f.length;
+  if(!f.length){document.getElementById('books-grid').innerHTML='<div class="empty-state"><div style="font-size:36px">📭</div><p>条件に合う書籍が見つかりませんでした。</p></div>';return;}
+  document.getElementById('books-grid').innerHTML=f.map(b=>{
+    const fs=Math.round(b.rating);
+    const ss='★'.repeat(fs)+'☆'.repeat(5-fs);
+    const subTags=b.sub.map(s=>`<span class="btag btag-sub">${s}</span>`).join('');
+    return `<div class="book-card">
+      <div class="book-header">
+        <div class="book-cover-sm" style="background:${b.cover}">${b.emoji}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="book-tags-row"><span class="btag btag-cat">${b.cat}</span>${subTags}</div>
+          <div class="book-title">${b.title}</div>
+          <div class="book-author">${b.author}</div>
+        </div>
+      </div>
+      <div class="book-stars"><span class="stars">${ss}</span><span class="stars-score">${b.rating}</span><span class="stars-count">（Amazon ${b.reviews}件）</span></div>
+      <div class="book-summary">${b.summary}</div>
+      <div class="book-meta-row"><span class="bchip">📄 ${b.pages}p</span><span class="bchip">🗓 ${b.year}年</span><span class="bchip">¥${b.price.toLocaleString()}</span></div>
+      <div class="book-buy"><button class="btn-buy btn-amzn">Amazonで見る</button><button class="btn-buy btn-raku">楽天で見る</button></div>
+    </div>`;
+  }).join('');
+}
+
+function updateChips(){
+  const chips=[];
+  if(activeCat!=='all')chips.push(`<span class="active-filter-chip">${activeCat}<button onclick="clearCat()">×</button></span>`);
+  activeSubs.forEach(s=>chips.push(`<span class="active-filter-chip">#${s}<button onclick="clearSub('${s}')">×</button></span>`));
+  if(searchQuery)chips.push(`<span class="active-filter-chip">"${searchQuery}"<button onclick="clearSearch()">×</button></span>`);
+  document.getElementById('active-filters').innerHTML=chips.join('');
+}
+window.clearCat=()=>{activeCat='all';document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.toggle('active',e.dataset.cat==='all'));refresh();};
+window.clearSub=s=>{activeSubs.delete(s);document.querySelector(`.htag[data-sub="${s}"]`)?.classList.remove('active');updateAllBtn();refresh();};
+window.clearSearch=()=>{searchQuery='';document.getElementById('search-input').value='';refresh();};
+function updateAllBtn(){document.querySelector('.htag[data-sub="all"]')?.classList.toggle('active',activeSubs.size===0);}
+function refresh(){updateChips();renderBooks();}
+
+document.querySelectorAll('#cat-filters .filter-item').forEach(el=>{
+  el.addEventListener('click',()=>{activeCat=el.dataset.cat;document.querySelectorAll('#cat-filters .filter-item').forEach(e=>e.classList.remove('active'));el.classList.add('active');refresh();});
+});
+document.querySelectorAll('#sub-filters .htag').forEach(el=>{
+  el.addEventListener('click',()=>{
+    const v=el.dataset.sub;
+    if(v==='all'){activeSubs.clear();document.querySelectorAll('#sub-filters .htag').forEach(e=>e.classList.remove('active'));el.classList.add('active');}
+    else{document.querySelector('.htag[data-sub="all"]').classList.remove('active');if(activeSubs.has(v)){activeSubs.delete(v);el.classList.remove('active');}else{activeSubs.add(v);el.classList.add('active');}updateAllBtn();}
+    refresh();
+  });
+});
+document.getElementById('search-input').addEventListener('input',e=>{searchQuery=e.target.value.trim();refresh();});
+document.getElementById('sort-select').addEventListener('change',e=>{sortBy=e.target.value;refresh();});
+renderBooks();
+</script>
+</body>
+</html>
