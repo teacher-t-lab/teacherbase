@@ -2,73 +2,179 @@
   {
     "isbn": "9784761527433",
     "category": "探究・PBL",
-    "tags": ["全教科共通"],
-    "comment": "探究担当・SSH教員に特におすすめ。問いを立てることの奥深さが学べる。"
+    "tags": [
+      "全教科共通"
+    ],
+    "comment": "探究担当・SSH教員に特におすすめ。問いを立てることの奥深さが学べる。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4761527439?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784761527433",
+    "title": "問いのデザイン",
+    "author": "安斎勇樹・塩瀬隆之",
+    "cover_url": "https://books.google.com/books/content?id=09GRzQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "ワークショップのファシリテーターに必要なスキルを解説。組織変革・商品開発のメンバーを本気にさせ、チームが成果を出す極意。",
+    "pages": 300,
+    "year": 2020,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784762830037",
     "category": "授業設計",
-    "tags": ["全教科共通"],
-    "comment": "逆向き設計の入門書。単元計画を見直したい先生に特におすすめ。"
+    "tags": [
+      "全教科共通"
+    ],
+    "comment": "逆向き設計の入門書。単元計画を見直したい先生に特におすすめ。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4762830038?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784762830037",
+    "title": "アンチ・サボタージュ・マニュアル職場防衛篇",
+    "author": "R.M.ガルフォード・B.フリッシュ・C.グリーン",
+    "cover_url": "https://books.google.com/books/content?id=pCJ8swEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "大戦中の「組織をダメにするスパイマニュアル」を敷衍し,「誰もがうっかりやってしまう」サボタージュを低減させる戦術を逆提案。",
+    "year": 2018,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784762014598",
     "category": "働き方・法律",
-    "tags": ["全教科共通"],
-    "comment": "職員室に一冊置いておきたい法律の基本書。保護者対応・体罰・個人情報まで網羅。"
+    "tags": [
+      "全教科共通"
+    ],
+    "comment": "職員室に一冊置いておきたい法律の基本書。保護者対応・体罰・個人情報まで網羅。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4762014591?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784762014598",
+    "title": "ケース・メソッドで学ぶ文章上達法",
+    "author": "松永美弘",
+    "cover_url": "https://books.google.com/books/content?id=dJ-ZAAAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "pages": 125,
+    "year": 2006,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784491038438",
     "category": "授業設計",
-    "tags": ["理科", "物理"],
-    "comment": "物理の「なぜ？」を引き出す授業づくりの実践集。実験の組み立て方・発問設計まで具体例が豊富。"
+    "tags": [
+      "理科",
+      "物理"
+    ],
+    "comment": "物理の「なぜ？」を引き出す授業づくりの実践集。実験の組み立て方・発問設計まで具体例が豊富。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4491038430?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784491038438"
   },
   {
     "isbn": "9784183140273",
     "category": "学級経営",
-    "tags": ["全教科共通"],
-    "comment": "学級開きから保護者対応まで、担任1年目でも実践できる具体的なスキルが凝縮された一冊。"
+    "tags": [
+      "全教科共通"
+    ],
+    "comment": "学級開きから保護者対応まで、担任1年目でも実践できる具体的なスキルが凝縮された一冊。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4183140277?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784183140273"
   },
   {
     "isbn": "9784296115501",
     "category": "ICT・DX",
-    "tags": ["全教科共通", "情報"],
-    "comment": "教員向けAI活用の決定版。授業への組み込み方から生徒への説明まで、すぐ使えるアイデアが満載。"
+    "tags": [
+      "全教科共通",
+      "情報"
+    ],
+    "comment": "教員向けAI活用の決定版。授業への組み込み方から生徒への説明まで、すぐ使えるアイデアが満載。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4296115502?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784296115501",
+    "title": "Q&A 経済安全保障の実務対応",
+    "author": "桜田雄紀",
+    "cover_url": "https://books.google.com/books/content?id=Q7800QEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "米中ロなど激変する国際関係。技術や知財を守り、サプライチェーンを構築するために必須の最新知識と実務上の留意点を丁寧に解説。",
+    "year": 2025,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784492047538",
     "category": "探究・PBL",
-    "tags": ["全教科共通"],
-    "comment": "高校での探究学習の立ち上げから評価まで一冊で完結。実際の授業記録が豊富で参考にしやすい。"
+    "tags": [
+      "全教科共通"
+    ],
+    "comment": "高校での探究学習の立ち上げから評価まで一冊で完結。実際の授業記録が豊富で参考にしやすい。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4492047530?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784492047538",
+    "title": "「思考法」の必読書５０冊、１冊で図解してみた",
+    "author": "鈴木　博毅",
+    "cover_url": "https://books.google.com/books/content?id=09n5EAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "ビジネスパーソンが最低限身につけておきたい思考法を、それぞれの名著を図解し解説します。",
+    "pages": 291,
+    "year": 2024,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784874247037",
     "category": "授業設計",
-    "tags": ["英語"],
-    "comment": "スピーキングから技術英語まで幅広く使える発問・活動集。英語の「話す」「聞く」活動の設計に。"
+    "tags": [
+      "英語"
+    ],
+    "comment": "スピーキングから技術英語まで幅広く使える発問・活動集。英語の「話す」「聞く」活動の設計に。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4874247032?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784874247037",
+    "title": "英語デトックス",
+    "author": "山本忠行・江田優子ペギー",
+    "description": "「英語の毒」について考える。英語ができればそれでいいのか、できない人間は無価値なのか、他の外国語ではダメなのか、日本語と英語、どちらが大切なのか、世界は英語とどう向き合っているのか...。英語を学ぶことの負の側面も正しく理解し、英語と上手につきあうために、言語教師がまとめた提言集。",
+    "pages": 206,
+    "year": 2016,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784535786370",
     "category": "授業設計",
-    "tags": ["数学"],
-    "comment": "「数学嫌い」を減らしたい先生必読。証明の面白さや数の美しさを生徒に伝えるための授業構成が学べる。"
+    "tags": [
+      "数学"
+    ],
+    "comment": "「数学嫌い」を減らしたい先生必読。証明の面白さや数の美しさを生徒に伝えるための授業構成が学べる。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4535786372?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784535786370",
+    "title": "なるほど!いっぱい中学数学",
+    "author": "熊倉啓之",
+    "pages": 224,
+    "year": 2010,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784761927165",
     "category": "ICT・DX",
-    "tags": ["全教科共通", "情報"],
-    "comment": "1人1台端末時代の授業設計の基本がわかる。特定のアプリに依存せず原則から学べるのが強み。"
+    "tags": [
+      "全教科共通",
+      "情報"
+    ],
+    "comment": "1人1台端末時代の授業設計の基本がわかる。特定のアプリに依存せず原則から学べるのが強み。",
+    "amazon_url": "https://www.amazon.co.jp/dp/476192716X?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784761927165",
+    "title": "カラー版中学・高校イラストカット集1200",
+    "author": "イクタケマコト",
+    "pages": 80,
+    "year": 2021,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784761924973",
     "category": "進路",
-    "tags": ["全教科共通"],
-    "comment": "大学入試だけでない、本当の意味での進路指導とは何かを問い直す一冊。担任として大切にしたい視点が見つかる。"
+    "tags": [
+      "全教科共通"
+    ],
+    "comment": "大学入試だけでない、本当の意味での進路指導とは何かを問い直す一冊。担任として大切にしたい視点が見つかる。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4761924977?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784761924973",
+    "title": "だれもが主役!安全に配慮した組体操・組立体操の指導法",
+    "author": "三宅良輔",
+    "cover_url": "https://books.google.com/books/content?id=X6bquQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+    "description": "本書では、子供たちがお互いに補助し合いながら、組立体操に挑戦できる方法を紹介しています。",
+    "pages": 80,
+    "year": 2018,
+    "fetched_at": "2026-03-31"
   },
   {
     "isbn": "9784818027107",
     "category": "働き方・法律",
-    "tags": ["全教科共通"],
-    "comment": "「忙しさ」の構造から変えるための実践的な提案集。管理職・教員どちらにも刺さる内容。読後に職員室の空気が変わる。"
+    "tags": [
+      "全教科共通"
+    ],
+    "comment": "「忙しさ」の構造から変えるための実践的な提案集。管理職・教員どちらにも刺さる内容。読後に職員室の空気が変わる。",
+    "amazon_url": "https://www.amazon.co.jp/dp/4818027103?tag=teacherbase-22",
+    "rakuten_url": "https://books.rakuten.co.jp/search?sitem=9784818027107"
   }
 ]
