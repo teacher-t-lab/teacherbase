@@ -22,6 +22,8 @@ jobs:
           python-version: "3.11"
 
       - name: Fetch book data from Google Books API
+        env:
+          GOOGLE_BOOKS_API_KEY: ${{ secrets.GOOGLE_BOOKS_API_KEY }}
         run: python scripts/fetch_books.py
 
       - name: Commit and push if changed

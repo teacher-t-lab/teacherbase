@@ -38,7 +38,10 @@ def make_buy_links(isbn):
 
 def fetch_google_books(isbn):
     """Google Books API から書誌情報を取得"""
+    api_key = os.environ.get("GOOGLE_BOOKS_API_KEY", "")
     api_url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn
+    if api_key:
+        api_url += "&key=" + api_key
     try:
         req = urllib.request.Request(
             api_url,
